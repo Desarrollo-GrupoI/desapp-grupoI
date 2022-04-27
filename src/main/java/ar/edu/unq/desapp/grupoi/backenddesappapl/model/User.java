@@ -24,6 +24,8 @@ public class User {
 	@Column(length = 8)
 	private String walletAddress;
 	
+	public User() {}
+	
 	public User(String email, String name, String surname, String address, String password) {
 		this.email = email;
 		this.name = name;
