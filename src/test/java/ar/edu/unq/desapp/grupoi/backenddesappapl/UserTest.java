@@ -76,12 +76,45 @@ class UserTest {
 
 	@Test
 	void testWalletAddress() {
-		String walletAddress = "ndfs123jasidm23xc2";
+		String walletAddress = "skrm34lc";
 		User user = UserBuilder.aUser().withWalletAddress(walletAddress).build();
 		Assert.assertEquals(walletAddress, user.getWalletAddress());
 		
-		String newWalletAddress = "jksdbjke3ojnaos2s";
+		String newWalletAddress = "lkf3jgmf";
 		user.setWalletAddress(newWalletAddress);
 		Assert.assertEquals(newWalletAddress, user.getWalletAddress());
+	}
+	
+	@Test
+	void testUserSetters() {
+		User user = new User();
+		
+		String email = "a@a.a";
+		user.setEmail(email);
+		Assert.assertEquals(email, user.getEmail());
+		
+		String name = "juan";
+		user.setName(name);
+		Assert.assertEquals(name, user.getName());
+		
+		String surname = "perez";
+		user.setSurname(surname);
+		Assert.assertEquals(surname, user.getSurname());
+		
+		String address = "Av. La Plata";
+		user.setAddress(address);
+		Assert.assertEquals(address, user.getAddress());
+		
+		String password = "Pas$word";
+		user.setPassword(password);
+		Assert.assertEquals(password, user.getPassword());
+		
+		String cvu = "7777777777777777777777";
+		user.setCvu(cvu);
+		Assert.assertEquals(cvu, user.getCvu());
+		
+		String walletAddress = "sdw2gb4d";
+		user.setWalletAddress(walletAddress);
+		Assert.assertEquals(walletAddress, user.getWalletAddress());
 	}
 }

@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class ExceptionsHandler {
 	
-	@ExceptionHandler(value = InvalidPasswordException.class)
-	public ResponseEntity<Object> exception(InvalidPasswordException exception) {
+	@ExceptionHandler(value = InvalidUserBody.class)
+	public ResponseEntity<Object> exception(InvalidUserBody exception) {
 		return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 }

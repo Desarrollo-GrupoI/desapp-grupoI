@@ -2,6 +2,8 @@ package ar.edu.unq.desapp.grupoi.backenddesappapl.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -20,8 +22,10 @@ public class User {
 	@Column
 	private String password;
 	@Column(length = 22)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private String cvu;
 	@Column(length = 8)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private String walletAddress;
 	
 	public User() {}

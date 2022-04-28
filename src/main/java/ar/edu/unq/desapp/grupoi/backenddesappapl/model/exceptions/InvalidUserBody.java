@@ -1,10 +1,10 @@
 package ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions;
 
-public class InvalidPasswordException extends RuntimeException {
+public class InvalidUserBody extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 	private String message;
 
-	public InvalidPasswordException(String message) {
+	public InvalidUserBody(String message) {
 		this.message = message;
 	}
 
