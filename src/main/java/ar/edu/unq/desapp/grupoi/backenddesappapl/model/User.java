@@ -1,31 +1,34 @@
 package ar.edu.unq.desapp.grupoi.backenddesappapl.model;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import ar.edu.unq.desapp.grupoi.backenddesappapl.model.converters.StringToIntegerConverter;
+
 @Entity
 @Table(name = "user")
 public class User {
 	@Id
-	@Column(length = 40)
+	@Column(nullable = false, length = 40)
 	private String email;
-	@Column(length = 30)
+	@Column(nullable = false, length = 30)
 	private String name;
-	@Column(length = 30)
+	@Column(nullable = false, length = 30)
 	private String surname;
-	@Column(length = 30)
+	@Column(nullable = false, length = 30)
 	private String address;
-	@Column
+	@Column(nullable = false)
 	private String password;
-	@Column(length = 22)
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column()
+	@Convert(converter = StringToIntegerConverter.class)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String cvu;
 	@Column(length = 8)
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	private String walletAddress;
 	
 	public User() {}
