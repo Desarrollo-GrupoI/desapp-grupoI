@@ -37,21 +37,33 @@ public class Validator {
 		List<String> errorMessages = new ArrayList<String>();
 		
 		if(!Validator.isValidEmail(user.getEmail()))
-			errorMessages.add("\n\u2022Invalid email");
-		
+			errorMessages.addAll(messageError(user.getEmail(),"Email cannot be empty","Invalid email"));
+			
 		if(!Validator.isValidName(user.getName()))
-			errorMessages.add("\n\u2022Invalid name");
+			errorMessages.addAll(messageError(user.getName(),"Name cannot be empty","The name must be between 3 and 30 characters"));
 		
 		if(!Validator.isValidSurname(user.getSurname()))
-			errorMessages.add("\n\u2022Invalid surname");
-		
+			errorMessages.addAll(messageError(user.getSurname(),"Surname cannot be empty","The surname must be between 3 and 30 characters"));
+			
 		if(!Validator.isValidAddress(user.getAddress()))
-			errorMessages.add("\n\u2022Invalid address");
-		
+			errorMessages.addAll(messageError(user.getAddress(),"Address cannot be empty","The adress must be between 10 and 30 characters"));
+			
 		if(!Validator.isValidPassword(user.getPassword()))
-			errorMessages.add("\n\u2022Invalid password");
-		
+			errorMessages.addAll(messageError(user.getPassword(),"The password cannot be empty","Invalid password"));
+
 		if(!errorMessages.isEmpty())
 			throw new InvalidUserBody(errorMessageBase + String.join("", errorMessages));
+	}
+	
+	
+	public static List<String> messageError(String data, String messageFirstError, String messageLastError) {
+		List<String> errorMessages = new ArrayList<String>();
+		
+		if (data.length() == 0)
+			errorMessages.add("\n\u2022" + messageFirstError);
+		else
+			errorMessages.add("\n\u2022" + messageLastError);
+	
+		return errorMessages;
 	}
 }
