@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.utils.Validator;
 
 
-public class ValidatorTest {
+class ValidatorTest {
 	
 	@Test
 	void testValidatePassword() {

@@ -1,6 +1,6 @@
 package ar.edu.unq.desapp.grupoi.backenddesappapl.model;
 
-public class UserIntention {
+public class IntentionBuySell {
 	private CryptoCurrency cryptoCurrency;
 	private Float cryptoAmount;
 	private Price price;
@@ -9,7 +9,7 @@ public class UserIntention {
 	private String userLastName;
 	private Operation operation;
 	
-	public UserIntention(CryptoCurrency cryptoCurrency,Float cryptoAmount, Price price, Float pesosArgAmount, String userName, String userLastName, Operation operation) {
+	public IntentionBuySell(CryptoCurrency cryptoCurrency,Float cryptoAmount, Price price, Float pesosArgAmount, String userName, String userLastName, Operation operation) {
 		this.cryptoCurrency = cryptoCurrency;
 		this.cryptoAmount = cryptoAmount;
 		this.price = price;
