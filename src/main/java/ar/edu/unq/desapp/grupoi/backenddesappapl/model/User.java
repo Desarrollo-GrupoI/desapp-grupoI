@@ -7,45 +7,50 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.converters.StringToIntegerConverter;
 
 @Entity
 @Table(name = "user")
 public class User {
+	
 	@Id
-	@Column(nullable = false, length = 40)
-	private String email;
-	@Column(nullable = false, length = 30)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+	@Column(nullable = false)
 	private String name;
-	@Column(nullable = false, length = 30)
+	@Column(nullable = false)
 	private String surname;
-	@Column(nullable = false, length = 30)
+	@Column(nullable = false, unique = true)
+	private String email;	
+	@Column(nullable = false)
 	private String address;
 	@Column(nullable = false)
 	private String password;
-	@Column()
-	@Convert(converter = StringToIntegerConverter.class)
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(nullable = false, unique = true)
+	//@Convert(converter = StringToIntegerConverter.class)
+	//@GeneratedValue(strategy = GenerationType.AUTO)
 	private String cvu;
-	@Column(length = 8)
+	@Column(nullable = false, unique = true)
 	private String walletAddress;
 	
 	public User() {}
 	
-	public User(String email, String name, String surname, String address, String password) {
-		this.email = email;
+	public User(String name, String surname, String email, String address, String password, String cvu, String walletAddress) {
 		this.name = name;
 		this.surname = surname;
+		this.email = email;
 		this.address = address;
 		this.password = password;
+		this.cvu = cvu;
+		this.walletAddress = walletAddress;
 	}
 
-	public User(String email, String name, String surname, String address, String password, String cvu, String walletAddress) {
+	/*public User(String email, String name, String surname, String address, String password, String cvu, String walletAddress) {
 		this(email, name, surname, address, password);
 		this.cvu = cvu;
 		this.walletAddress = walletAddress;
 	}
+	*/
 
 	public String getEmail() {
 		return this.email;

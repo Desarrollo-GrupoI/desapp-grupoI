@@ -12,7 +12,7 @@ public class StringToIntegerConverter implements AttributeConverter <String, Int
 			try {
 				return Integer.parseInt(value);
 			} catch(Exception e) {
-				throw new IllegalStateException("Invalid number: " + value);
+				throw new IllegalStateException("Invalid number: " + value.length());
 			}
 		}
 		

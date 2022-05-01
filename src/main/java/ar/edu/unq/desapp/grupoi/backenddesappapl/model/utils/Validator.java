@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterUserDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.User;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.InvalidUserBody;
 
@@ -32,7 +33,7 @@ public class Validator {
 		return Pattern.matches("^(?=.{6,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\\W).*$", password);
 	}
 	
-	public static void validateUser(User user) {
+	public static void validateUser(RegisterUserDTO user) {
 		String errorMessageBase = "Error(s) in user body:";
 		List<String> errorMessages = new ArrayList<String>();
 		
