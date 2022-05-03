@@ -5,16 +5,16 @@ import java.time.LocalDateTime;
 public class IntentionBuySell {
 	
 	private Long id;
-	private CryptoCurrency cryptoCurrency;
+	private CryptoSymbol cryptoCurrency;
 	private Float cryptoAmount;
-	private Price price;
+	private Float price;
 	private Float pesosArgAmount;
 	private String userName;
 	private String userLastName;
 	private Operation operation;
 	private LocalDateTime date = LocalDateTime.now();
 	
-	public IntentionBuySell(CryptoCurrency cryptoCurrency,Float cryptoAmount, Price price, Float pesosArgAmount, String userName, String userLastName, Operation operation) {
+	public IntentionBuySell(CryptoSymbol cryptoCurrency,Float cryptoAmount, Float price, Float pesosArgAmount, String userName, String userLastName, Operation operation) {
 		this.cryptoCurrency = cryptoCurrency;
 		this.cryptoAmount = cryptoAmount;
 		this.price = price;
@@ -32,11 +32,11 @@ public class IntentionBuySell {
 		this.id = id;
 	}
 	
-	public CryptoCurrency getCryptoCurrency() {
+	public CryptoSymbol getCryptoCurrency() {
 		return this.cryptoCurrency;
 	}
 	
-	public void setCryptoCurrency(CryptoCurrency cryptoCurrency) {
+	public void setCryptoCurrency(CryptoSymbol cryptoCurrency) {
 		this.cryptoCurrency = cryptoCurrency;
 	}
 		
@@ -48,11 +48,11 @@ public class IntentionBuySell {
 		this.cryptoAmount = cryptoAmount;
 	}
 	
-	public Price getPrice() {
+	public Float getPrice() {
 		return price;
 	}
 
-	public void setPrice(Price price) {
+	public void setPrice(Float price) {
 		this.price = price;
 	}
 	

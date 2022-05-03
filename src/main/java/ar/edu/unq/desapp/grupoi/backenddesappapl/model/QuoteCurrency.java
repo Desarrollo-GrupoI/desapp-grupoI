@@ -1,27 +1,27 @@
 package ar.edu.unq.desapp.grupoi.backenddesappapl.model;
 
 public class QuoteCurrency {
-	private CryptoCurrency cryptoCurrency;
-	private Price price;
+	private CryptoSymbol cryptoCurrency;
+	private Float price;
 	
-	public QuoteCurrency(CryptoCurrency cryptoCurrency, Price price) {
+	public QuoteCurrency(CryptoSymbol cryptoCurrency, Float price) {
 		this.cryptoCurrency = cryptoCurrency;
 		this.price = price;
 	}
 
-	public CryptoCurrency getCryptoCurrency() {
+	public CryptoSymbol getCryptoCurrency() {
 		return this.cryptoCurrency;
 	}
 	
-	public void setCryptoCurrency(CryptoCurrency cryptoCurrency) {
+	public void setCryptoCurrency(CryptoSymbol cryptoCurrency) {
 		this.cryptoCurrency = cryptoCurrency;
 	}
 
-	public Price getPrice() {
+	public Float getPrice() {
 		return price;
 	}
 
-	public void setPrice(Price price) {
+	public void setPrice(Float price) {
 		this.price = price;
 	}
 }

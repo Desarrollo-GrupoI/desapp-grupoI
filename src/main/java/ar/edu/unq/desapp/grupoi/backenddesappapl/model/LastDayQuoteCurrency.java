@@ -3,22 +3,22 @@ package ar.edu.unq.desapp.grupoi.backenddesappapl.model;
 import java.util.Date;
 
 public class LastDayQuoteCurrency {
-	private CryptoCurrency cryptoCurrency;
+	private CryptoSymbol cryptoCurrency;
 	private Date date;
 	private Price price;
 	
 	
-	public LastDayQuoteCurrency(CryptoCurrency cryptoCurrency, Price price, Date date) {
+	public LastDayQuoteCurrency(CryptoSymbol cryptoCurrency, Price price, Date date) {
 		this.cryptoCurrency = cryptoCurrency;
 		this.date = date;
 		this.price = price;
 	}
 
-	public CryptoCurrency getCryptoCurrency() {
+	public CryptoSymbol getCryptoCurrency() {
 		return this.cryptoCurrency;
 	}
 	
-	public void setCryptoCurrency(CryptoCurrency cryptoCurrency) {
+	public void setCryptoCurrency(CryptoSymbol cryptoCurrency) {
 		this.cryptoCurrency = cryptoCurrency;
 	}
 

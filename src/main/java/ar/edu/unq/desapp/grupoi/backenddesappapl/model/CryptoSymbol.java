@@ -1,6 +1,6 @@
 package ar.edu.unq.desapp.grupoi.backenddesappapl.model;
 
-public enum CryptoCurrency {
+public enum CryptoSymbol {
 	ALICEUSDT,
 	MATICUSDT,
 	AXSUSDT,

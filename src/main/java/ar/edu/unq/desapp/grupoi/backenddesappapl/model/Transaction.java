@@ -6,14 +6,12 @@ public class Transaction {
 	private IntentionBuySell transactionIntention;
 	private QuoteCurrency criptoActive;
 	private Float cryptoAmount;
-	private Price price;
+	private Float price;
 	private Float pesosArgAmount;
 	private String userName;
 	private String userLastName;
 	private Operation operation;
 	private TransactionState state;
-	
-	
 	
 	public Long getId() {
 		return id;
@@ -39,10 +37,10 @@ public class Transaction {
 	public void setCryptoAmount(Float cryptoAmount) {
 		this.cryptoAmount = cryptoAmount;
 	}
-	public Price getPrice() {
+	public Float getPrice() {
 		return price;
 	}
-	public void setPrice(Price price) {
+	public void setPrice(Float price) {
 		this.price = price;
 	}
 	public Float getPesosArgAmount() {
