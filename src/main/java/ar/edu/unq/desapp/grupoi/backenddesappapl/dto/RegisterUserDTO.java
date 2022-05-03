@@ -5,11 +5,11 @@ import javax.validation.constraints.*;
 public class RegisterUserDTO {
 	
 	@NotBlank(message = "User must have a name")
-    @Size(min = 3, max = 30, message = "User's name must be between 3 and 30 characters")
+    @Size(min = 3, max = 30, message = "User name must be between 3 and 30 characters")
     private String name;
 
     @NotBlank(message = "User must have a surname")
-    @Size(min = 3, max = 30, message = "User's surname must be between 3 and 30 characters")
+    @Size(min = 3, max = 30, message = "User surname must be between 3 and 30 characters")
     private String surname;
 
     @NotBlank(message = "User must have an e-mail")
@@ -17,7 +17,7 @@ public class RegisterUserDTO {
     private String email;
 
     @NotBlank(message = "User must have an address")
-    @Size(min = 10, max = 30, message = "User's address must be between 10 and 30 characters")
+    @Size(min = 10, max = 30, message = "User address must be between 10 and 30 characters")
     private String address;
 
     @NotBlank(message = "User must have a password")
@@ -26,11 +26,11 @@ public class RegisterUserDTO {
     private String password;
 
     @NotBlank(message = "User must have a CVU")
-    @Size(min = 22, max = 22, message = "User's CVU must be 22 characters")
+    @Size(min = 22, max = 22, message = "User CVU must be 22 characters")
     private String cvu;
 
     @NotBlank(message = "User must have a wallet address")
-    @Size(min = 8, max = 8, message = "User's wallet address must be 8 characters")
+    @Size(min = 8, max = 8, message = "User wallet address must be 8 characters")
     private String walletAddress;
 
     public String getName() {

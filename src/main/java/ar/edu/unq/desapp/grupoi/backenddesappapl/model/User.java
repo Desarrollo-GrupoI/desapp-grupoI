@@ -16,23 +16,22 @@ public class User {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-	@Column(nullable = false)
-	private String name;
-	@Column(nullable = false)
+	private String name;	
 	private String surname;
-	@Column(nullable = false, unique = true)
+	@Column(unique = true)
 	private String email;	
-	@Column(nullable = false)
 	private String address;
-	@Column(nullable = false)
 	private String password;
-	@Column(nullable = false, unique = true)
+	@Column(unique = true)
 	//@Convert(converter = StringToIntegerConverter.class)
 	//@GeneratedValue(strategy = GenerationType.AUTO)
 	private String cvu;
-	@Column(nullable = false, unique = true)
+	@Column(unique = true)
 	private String walletAddress;
+	private Integer operations;
+	private String reputation;
 	
+
 	public User() {}
 	
 	public User(String name, String surname, String email, String address, String password, String cvu, String walletAddress) {
@@ -43,6 +42,8 @@ public class User {
 		this.password = password;
 		this.cvu = cvu;
 		this.walletAddress = walletAddress;
+		this.operations = 0;
+		this.reputation = "No operations";
 	}
 
 	/*public User(String email, String name, String surname, String address, String password, String cvu, String walletAddress) {
@@ -51,6 +52,29 @@ public class User {
 		this.walletAddress = walletAddress;
 	}
 	*/
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Integer getOperations() {
+		return operations;
+	}
+
+	public void setOperations(Integer operations) {
+		this.operations = operations;
+	}
+
+	public String getReputation() {
+		return reputation;
+	}
+
+	public void setReputation(String reputation) {
+		this.reputation = reputation;
+	}
 
 	public String getEmail() {
 		return this.email;
