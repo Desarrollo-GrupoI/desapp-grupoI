@@ -1,11 +1,8 @@
 package ar.edu.unq.desapp.grupoi.backenddesappapl.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,9 +14,8 @@ public class User {
 	private String surname;
 	private String address;
 	private String password;
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "user_cvu")
-	private Cvu cvu;
+	@Column(unique = true)
+	private String cvu;
 	@Column(unique = true)
 	private String walletAddress;
 
@@ -31,11 +27,10 @@ public class User {
 		this.email = email;
 		this.address = address;
 		this.password = password;
-		this.cvu = new Cvu();
 	}
 
-	public User(String name, String surname, String email, String address, String password, Cvu cvu, String walletAddress) {
-		this(email, name, surname, address, password);
+	public User(String name, String surname, String email, String address, String password, String cvu, String walletAddress) {
+		this(name, surname, email, address, password);
 		this.cvu = cvu;
 		this.walletAddress = walletAddress;
 	}
@@ -81,10 +76,10 @@ public class User {
 	}
 
 	public String getCvu() {
-		return String.format("%022d", this.cvu.getCvu());
+		return this.cvu;
 	}
 
-	public void setCvu(Cvu cvu) {
+	public void setCvu(String cvu) {
 		this.cvu = cvu;
 	}
 

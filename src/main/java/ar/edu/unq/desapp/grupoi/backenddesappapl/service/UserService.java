@@ -23,7 +23,9 @@ public class UserService {
 				userDTO.getSurname(),
 				userDTO.getEmail(),
 				userDTO.getAddress(),
-				userDTO.getPassword()
+				userDTO.getPassword(),
+				userDTO.getCvu(),
+				userDTO.getWalletAddress()
 				);
 				
 		return this.userRepository.save(user);
