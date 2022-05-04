@@ -4,7 +4,7 @@ public class Transaction {
 	
 	private Long id;
 	private IntentionBuySell transactionIntention;
-	private QuoteCurrency criptoActive;
+	private CryptoCurrency criptoActive;
 	private Float cryptoAmount;
 	private Float price;
 	private Float pesosArgAmount;
@@ -25,10 +25,10 @@ public class Transaction {
 	public void setTransactionIntention(IntentionBuySell transactionIntention) {
 		this.transactionIntention = transactionIntention;
 	}
-	public QuoteCurrency getCriptoActive() {
+	public CryptoCurrency getCriptoActive() {
 		return criptoActive;
 	}
-	public void setCriptoActive(QuoteCurrency criptoActive) {
+	public void setCriptoActive(CryptoCurrency criptoActive) {
 		this.criptoActive = criptoActive;
 	}
 	public Float getCryptoAmount() {

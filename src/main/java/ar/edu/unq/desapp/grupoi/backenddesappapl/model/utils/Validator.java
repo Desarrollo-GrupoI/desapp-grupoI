@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterUserDTO;
-import ar.edu.unq.desapp.grupoi.backenddesappapl.model.User;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.InvalidUserBody;
 
 public class Validator {
@@ -60,7 +59,7 @@ public class Validator {
 	public static List<String> messageError(String data, String messageFirstError, String messageLastError) {
 		List<String> errorMessages = new ArrayList<String>();
 		
-		if (data.length() == 0)
+		if (data.isEmpty())
 			errorMessages.add("\n\u2022" + messageFirstError);
 		else
 			errorMessages.add("\n\u2022" + messageLastError);

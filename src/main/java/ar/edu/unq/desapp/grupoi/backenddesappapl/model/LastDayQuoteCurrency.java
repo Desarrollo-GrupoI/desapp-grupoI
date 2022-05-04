@@ -5,10 +5,10 @@ import java.util.Date;
 public class LastDayQuoteCurrency {
 	private CryptoSymbol cryptoCurrency;
 	private Date date;
-	private Price price;
+	private Float price;
 	
 	
-	public LastDayQuoteCurrency(CryptoSymbol cryptoCurrency, Price price, Date date) {
+	public LastDayQuoteCurrency(CryptoSymbol cryptoCurrency, Float price, Date date) {
 		this.cryptoCurrency = cryptoCurrency;
 		this.date = date;
 		this.price = price;
@@ -22,11 +22,11 @@ public class LastDayQuoteCurrency {
 		this.cryptoCurrency = cryptoCurrency;
 	}
 
-	public Price getPrice() {
+	public Float getPrice() {
 		return price;
 	}
 
-	public void setPrice(Price price) {
+	public void setPrice(Float price) {
 		this.price = price;
 	}
 	

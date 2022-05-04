@@ -8,7 +8,6 @@ import ar.edu.unq.desapp.grupoi.backenddesappapl.model.User;
 
 @Configuration
 @Repository
-public interface UserRepository  extends CrudRepository<User, Long> {
+public interface UserRepository extends CrudRepository<User, String> {
 	
-
 }

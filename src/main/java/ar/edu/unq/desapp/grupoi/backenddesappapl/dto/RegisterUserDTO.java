@@ -25,14 +25,6 @@ public class RegisterUserDTO {
     @Pattern(regexp = "^(?=.{6,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\\W).*$", message = "The password must contain at least one uppercase letter, one lowercase letter and one special character")
     private String password;
 
-    @NotBlank(message = "User must have a CVU")
-    @Size(min = 22, max = 22, message = "User CVU must be 22 characters")
-    private String cvu;
-
-    @NotBlank(message = "User must have a wallet address")
-    @Size(min = 8, max = 8, message = "User wallet address must be 8 characters")
-    private String walletAddress;
-
     public String getName() {
         return name;
     }
@@ -71,21 +63,5 @@ public class RegisterUserDTO {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getCvu() {
-        return cvu;
-    }
-
-    public void setCvu(String cvu) {
-        this.cvu = cvu;
-    }
-
-    public String getWalletAddress() {
-        return walletAddress;
-    }
-
-    public void setWalletAddress(String walletAddress) {
-        this.walletAddress = walletAddress;
     }
 }

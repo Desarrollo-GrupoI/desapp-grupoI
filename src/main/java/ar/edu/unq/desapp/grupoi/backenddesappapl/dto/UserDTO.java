@@ -1,44 +1,47 @@
 package ar.edu.unq.desapp.grupoi.backenddesappapl.dto;
 
 public class UserDTO {
-	
-	private String nombre;
-	private String apellido;
+	private String name;
+	private String surname;
 	private Integer operations;
 	private String reputation;
 	
-	public UserDTO(String nombre, String apellido, Integer operations, String reputation) {
-		this.nombre = nombre;
-		this.apellido = apellido;
+	public UserDTO(String name, String surname, Integer operations, String reputation) {
+		this.name = name;
+		this.surname = surname;
 		this.operations = operations;
 		this.reputation = reputation;
 	}
 	
-	public String getNombre() {
-		return nombre;
+	public String getName() {
+		return name;
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getApellido() {
-		return apellido;
+	
+	public String getSurname() {
+		return surname;
 	}
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
+	
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
+	
 	public Integer getOperations() {
 		return operations;
 	}
+	
 	public void setOperations(Integer operations) {
 		this.operations = operations;
 	}
+	
 	public String getReputation() {
 		return reputation;
 	}
+	
 	public void setReputation(String reputation) {
 		this.reputation = reputation;
 	}
-	
-	
-
 }

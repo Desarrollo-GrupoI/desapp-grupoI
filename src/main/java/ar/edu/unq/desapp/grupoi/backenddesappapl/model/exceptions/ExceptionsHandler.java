@@ -12,4 +12,9 @@ public class ExceptionsHandler {
 	public ResponseEntity<Object> exception(InvalidUserBody exception) {
 		return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
 	}
+	
+	@ExceptionHandler(value = UserNotFound.class)
+	public ResponseEntity<Object> exception(UserNotFound exception) {
+		return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+	}
 }

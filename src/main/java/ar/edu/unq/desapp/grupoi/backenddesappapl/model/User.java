@@ -1,87 +1,43 @@
 package ar.edu.unq.desapp.grupoi.backenddesappapl.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import ar.edu.unq.desapp.grupoi.backenddesappapl.model.converters.StringToIntegerConverter;
 
 @Entity
 @Table(name = "user")
 public class User {
-	
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-	private String name;	
+	private String email;
+	private String name;
 	private String surname;
-	@Column(unique = true)
-	private String email;	
 	private String address;
 	private String password;
-	@Column(unique = true)
-	//@Convert(converter = StringToIntegerConverter.class)
-	//@GeneratedValue(strategy = GenerationType.AUTO)
-	private String cvu;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_cvu")
+	private Cvu cvu;
 	@Column(unique = true)
 	private String walletAddress;
-	private Integer operations;
-	private String reputation;
-	
 
 	public User() {}
 	
-	public User(String name, String surname, String email, String address, String password, String cvu, String walletAddress) {
+	public User(String name, String surname, String email, String address, String password) {
 		this.name = name;
 		this.surname = surname;
 		this.email = email;
 		this.address = address;
 		this.password = password;
-		this.cvu = cvu;
-		this.walletAddress = walletAddress;
-		this.operations = 0;
-		this.reputation = "No operations";
+		this.cvu = new Cvu();
 	}
 
-	/*public User(String email, String name, String surname, String address, String password, String cvu, String walletAddress) {
+	public User(String name, String surname, String email, String address, String password, Cvu cvu, String walletAddress) {
 		this(email, name, surname, address, password);
 		this.cvu = cvu;
 		this.walletAddress = walletAddress;
-	}
-	*/
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Integer getOperations() {
-		return operations;
-	}
-
-	public void setOperations(Integer operations) {
-		this.operations = operations;
-	}
-
-	public String getReputation() {
-		return reputation;
-	}
-
-	public void setReputation(String reputation) {
-		this.reputation = reputation;
-	}
-
-	public String getEmail() {
-		return this.email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 	
 	public String getName() {
@@ -98,8 +54,16 @@ public class User {
 
 	public void setSurname(String surname) {
 		this.surname = surname;
-	}	
+	}
 
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
 	public String getAddress() {
 		return this.address;
 	}
@@ -117,10 +81,10 @@ public class User {
 	}
 
 	public String getCvu() {
-		return this.cvu;
+		return String.format("%022d", this.cvu.getCvu());
 	}
 
-	public void setCvu(String cvu) {
+	public void setCvu(Cvu cvu) {
 		this.cvu = cvu;
 	}
 
