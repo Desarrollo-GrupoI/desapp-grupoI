@@ -3,9 +3,10 @@ package ar.edu.unq.desapp.grupoi.backenddesappapl.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterUserDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.UserDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.User;
@@ -48,12 +49,13 @@ public class UserService {
 		return usersDTO;
 	}
 	
-	public User findById(String email) {
-		try {
-			return userRepository.findById(email).get();			
-		} catch(NoSuchElementException e) {
-			throw new UserNotFound("The user was not found");
-		}
+	public Optional<User> findByEmail(String email) {
+//		try {
+//			return userRepository.findById(email).get();			
+//		} catch(NoSuchElementException e) {
+//			throw new UserNotFound("The user was not found");
+//		}
+		return userRepository.findByEmail(email);
 	}
 	
 	public void deleteById(String email) {
