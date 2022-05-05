@@ -8,16 +8,20 @@ import org.springframework.stereotype.Service;
 
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterUserDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.UserDTO;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Cvu;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.User;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.UserNotFound;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.repositories.CvuRepository;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.repositories.UserRepository;
 
 @Service
 public class UserService {
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private CvuRepository cvuRepository;
 	
-	public User save(RegisterUserDTO userDTO) {	
+	public User save(RegisterUserDTO userDTO) {		
 		User user = new User(
 				userDTO.getName(),
 				userDTO.getSurname(),

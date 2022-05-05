@@ -9,18 +9,21 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "user")
+@Table
 public class User {
 	@Id
+	@Column(length = 30)
 	private String email;
+	@Column(length = 30)
 	private String name;
+	@Column(length = 30)
 	private String surname;
+	@Column(length = 30)
 	private String address;
 	private String password;
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "user_cvu")
+	@OneToOne(cascade = {CascadeType.ALL})
+	@JoinColumn(name = "cvu")
 	private Cvu cvu;
-	@Column(unique = true)
 	private String walletAddress;
 
 	public User() {}
@@ -81,7 +84,7 @@ public class User {
 	}
 
 	public String getCvu() {
-		return String.format("%022d", this.cvu.getCvu());
+		return String.format("%022d", this.cvu.getNumber());
 	}
 
 	public void setCvu(Cvu cvu) {

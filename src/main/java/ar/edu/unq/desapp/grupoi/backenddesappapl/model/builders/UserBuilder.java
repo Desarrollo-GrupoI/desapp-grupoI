@@ -9,7 +9,7 @@ public class UserBuilder {
 	private String surname = "noSurname";
 	private String address = "noAddress";
 	private String password = "noPassword";
-	private Cvu cvu = new Cvu("0");
+	private Cvu cvu = new Cvu();
 	private String walletAddress = "noWalletAddress";
 	
 	public static UserBuilder aUser() {

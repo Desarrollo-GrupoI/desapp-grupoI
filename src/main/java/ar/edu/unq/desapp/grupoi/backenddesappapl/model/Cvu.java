@@ -7,23 +7,19 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "cvu")
+@Table
 public class Cvu {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer cvu;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer number;
 	
 	public Cvu() {}
 
-	public Cvu(Integer cvu) {
-		this.cvu = cvu;
+	public Integer getNumber() {
+		return number;
 	}
 
-	public Integer getCvu() {
-		return cvu;
-	}
-
-	public void setCvu(Integer cvu) {
-		this.cvu = cvu;
+	public void setNumber(Integer number) {
+		this.number = number;
 	}
 }

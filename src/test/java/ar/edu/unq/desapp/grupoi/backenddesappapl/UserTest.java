@@ -66,11 +66,11 @@ class UserTest {
 	
 	@Test
 	void testCvu() {
-		Cvu cvu = new Cvu("7777777777777777777777");
+		Cvu cvu = new Cvu();
 		User user = UserBuilder.aUser().withCvu(cvu).build();
 		Assert.assertEquals(cvu, user.getCvu());
 
-		Cvu newCvu = new Cvu("9999999999999999999999");
+		Cvu newCvu = new Cvu();
 		user.setCvu(newCvu);
 		Assert.assertEquals(newCvu, user.getCvu());
 	}
@@ -110,7 +110,7 @@ class UserTest {
 		user.setPassword(password);
 		Assert.assertEquals(password, user.getPassword());
 		
-		Cvu cvu = new Cvu("7777777777777777777777");
+		Cvu cvu = new Cvu();
 		user.setCvu(cvu);
 		Assert.assertEquals(cvu, user.getCvu());
 		
