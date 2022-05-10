@@ -1,15 +1,14 @@
 package ar.edu.unq.desapp.grupoi.backenddesappapl.model.builders;
 
-import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Cvu;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.User;
 
 public class UserBuilder {
-	private String email = "noEmail";
 	private String name = "noName";
 	private String surname = "noSurname";
+	private String email = "noEmail";
 	private String address = "noAddress";
 	private String password = "noPassword";
-	private Cvu cvu = new Cvu();
+	private String cvu = "0000000000000000000000";
 	private String walletAddress = "noWalletAddress";
 	
 	public static UserBuilder aUser() {
@@ -20,11 +19,6 @@ public class UserBuilder {
 		return new User(this.name, this.surname, this.email, this.address, this.password, this.cvu, this.walletAddress);
 	}
 	
-	public UserBuilder withEmail(String email) {
-		this.email = email;
-		return this;
-	}
-	
 	public UserBuilder withName(String name) {
 		this.name = name;
 		return this;
@@ -32,6 +26,11 @@ public class UserBuilder {
 	
 	public UserBuilder withSurname(String surname) {
 		this.surname = surname;
+		return this;
+	}
+	
+	public UserBuilder withEmail(String email) {
+		this.email = email;
 		return this;
 	}
 	
@@ -45,7 +44,7 @@ public class UserBuilder {
 		return this;
 	}
 	
-	public UserBuilder withCvu(Cvu cvu) {
+	public UserBuilder withCvu(String cvu) {
 		this.cvu = cvu;
 		return this;
 	}

@@ -1,29 +1,28 @@
 package ar.edu.unq.desapp.grupoi.backenddesappapl.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import ar.edu.unq.desapp.grupoi.backenddesappapl.model.converters.Base62;
 
 @Entity
 @Table
 public class User {
-	@Id
-	@Column(length = 30)
-	private String email;
 	@Column(length = 30)
 	private String name;
 	@Column(length = 30)
 	private String surname;
+	@Id
+	@Column(length = 30)
+	private String email;
 	@Column(length = 30)
 	private String address;
 	private String password;
-	@OneToOne(cascade = {CascadeType.ALL})
-	@JoinColumn(name = "cvu")
-	private Cvu cvu;
+	@Column(length = 22)
+	private String cvu;
+	@Column(length = 8)
 	private String walletAddress;
 
 	public User() {}
@@ -34,11 +33,10 @@ public class User {
 		this.email = email;
 		this.address = address;
 		this.password = password;
-		this.cvu = new Cvu();
 	}
 
-	public User(String name, String surname, String email, String address, String password, Cvu cvu, String walletAddress) {
-		this(email, name, surname, address, password);
+	public User(String name, String surname, String email, String address, String password, String cvu, String walletAddress) {
+		this(name, surname, email, address, password);
 		this.cvu = cvu;
 		this.walletAddress = walletAddress;
 	}
@@ -84,10 +82,10 @@ public class User {
 	}
 
 	public String getCvu() {
-		return String.format("%022d", this.cvu.getNumber());
+		return this.cvu;
 	}
 
-	public void setCvu(Cvu cvu) {
+	public void setCvu(String cvu) {
 		this.cvu = cvu;
 	}
 
@@ -97,5 +95,14 @@ public class User {
 
 	public void setWalletAddress(String walletAddress) {
 		this.walletAddress = walletAddress;
+	}
+	
+	public void initializeCvu(Integer cvuNumber) {
+		this.cvu = String.format("%022d", cvuNumber);
+	}
+	
+	public void initializeWalletAddress(Integer cvuNumber) {
+		String base62Number = Base62.encode(cvuNumber);
+		this.walletAddress = String.format("%0" + (8 - base62Number.length()) + "d%s", 0, base62Number);
 	}
 }

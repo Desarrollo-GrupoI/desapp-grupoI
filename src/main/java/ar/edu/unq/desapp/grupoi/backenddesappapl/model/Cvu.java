@@ -16,7 +16,7 @@ public class Cvu {
 	public Cvu() {}
 
 	public Integer getNumber() {
-		return number;
+		return this.number;
 	}
 
 	public void setNumber(Integer number) {

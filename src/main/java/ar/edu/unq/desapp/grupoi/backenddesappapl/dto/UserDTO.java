@@ -14,7 +14,7 @@ public class UserDTO {
 	}
 	
 	public String getName() {
-		return name;
+		return this.name;
 	}
 	
 	public void setName(String name) {
@@ -22,7 +22,7 @@ public class UserDTO {
 	}
 	
 	public String getSurname() {
-		return surname;
+		return this.surname;
 	}
 	
 	public void setSurname(String surname) {
@@ -30,7 +30,7 @@ public class UserDTO {
 	}
 	
 	public Integer getOperations() {
-		return operations;
+		return this.operations;
 	}
 	
 	public void setOperations(Integer operations) {
@@ -38,7 +38,7 @@ public class UserDTO {
 	}
 	
 	public String getReputation() {
-		return reputation;
+		return this.reputation;
 	}
 	
 	public void setReputation(String reputation) {

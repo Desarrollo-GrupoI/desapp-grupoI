@@ -3,7 +3,6 @@ package ar.edu.unq.desapp.grupoi.backenddesappapl.dto;
 import javax.validation.constraints.*;
 
 public class RegisterUserDTO {
-	
 	@NotBlank(message = "User must have a name")
     @Size(min = 3, max = 30, message = "User name must be between 3 and 30 characters")
     private String name;
@@ -26,7 +25,7 @@ public class RegisterUserDTO {
     private String password;
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -34,7 +33,7 @@ public class RegisterUserDTO {
     }
 
     public String getSurname() {
-        return surname;
+        return this.surname;
     }
 
     public void setSurname(String surname) {
@@ -42,7 +41,7 @@ public class RegisterUserDTO {
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) {
@@ -50,7 +49,7 @@ public class RegisterUserDTO {
     }
 
     public String getAddress() {
-        return address;
+        return this.address;
     }
 
     public void setAddress(String address) {
@@ -58,7 +57,7 @@ public class RegisterUserDTO {
     }
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     public void setPassword(String password) {

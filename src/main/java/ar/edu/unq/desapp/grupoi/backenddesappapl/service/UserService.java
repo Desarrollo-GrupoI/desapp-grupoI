@@ -3,6 +3,8 @@ package ar.edu.unq.desapp.grupoi.backenddesappapl.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,19 +19,25 @@ import ar.edu.unq.desapp.grupoi.backenddesappapl.repositories.UserRepository;
 @Service
 public class UserService {
 	@Autowired
-	private UserRepository userRepository;
-	@Autowired
 	private CvuRepository cvuRepository;
+	@Autowired
+	private UserRepository userRepository;
 	
-	public User save(RegisterUserDTO userDTO) {		
-		User user = new User(
-				userDTO.getName(),
-				userDTO.getSurname(),
-				userDTO.getEmail(),
-				userDTO.getAddress(),
-				userDTO.getPassword()
-				);
-				
+	@Transactional
+	public User save(RegisterUserDTO userDTO) {
+		Cvu cvu = cvuRepository.save(new Cvu());
+		User user = this.userRepository.save(
+				new User(
+						userDTO.getName(),
+						userDTO.getSurname(),
+						userDTO.getEmail(),
+						userDTO.getAddress(),
+						userDTO.getPassword()
+						));
+
+		user.initializeCvu(cvu.getNumber());
+		user.initializeWalletAddress(cvu.getNumber());
+		
 		return this.userRepository.save(user);
 	}
 	
@@ -52,7 +60,7 @@ public class UserService {
 	
 	public User findById(String email) {
 		try {
-			return userRepository.findById(email).get();			
+			return userRepository.findById(email).get();
 		} catch(NoSuchElementException e) {
 			throw new UserNotFound("The user was not found");
 		}
