@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.grupoi.backenddesappapl;
+package ar.edu.unq.desapp.grupoi.backenddesappapl.model;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
