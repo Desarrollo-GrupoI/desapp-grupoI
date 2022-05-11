@@ -31,7 +31,7 @@ public class UserRestController {
 	}
 	
 	@GetMapping(path = "/get/{userEmail}")
-	public ResponseEntity<User> findAll(@PathVariable String userEmail) {
+	public ResponseEntity<User> findById(@PathVariable String userEmail) {
 		User user = userService.findById(userEmail);
 		return ResponseEntity.ok().body(user);
 	}
