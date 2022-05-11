@@ -1,22 +1,11 @@
-package ar.edu.unq.desapp.grupoi.backenddesappapl;
+package ar.edu.unq.desapp.grupoi.backenddesappapl.model;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
-import ar.edu.unq.desapp.grupoi.backenddesappapl.model.User;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.builders.UserBuilder;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.model.converters.Base62;
 
 class UserTest {
-	
-	@Test
-	void testEmail() {
-		String email = "jose@hotmail.com";
-		User user = UserBuilder.aUser().withEmail(email).build();
-		Assert.assertEquals(email, user.getEmail());
-
-		String newEmail = "jose@gmail.com";
-		user.setEmail(newEmail);
-		Assert.assertEquals(newEmail, user.getEmail());
-	}
 	
 	@Test
 	void testName() {
@@ -38,6 +27,17 @@ class UserTest {
 		String newSurname = "Figueroa";
 		user.setSurname(newSurname);
 		Assert.assertEquals(newSurname, user.getSurname());
+	}
+	
+	@Test
+	void testEmail() {
+		String email = "jose@hotmail.com";
+		User user = UserBuilder.aUser().withEmail(email).build();
+		Assert.assertEquals(email, user.getEmail());
+
+		String newEmail = "jose@gmail.com";
+		user.setEmail(newEmail);
+		Assert.assertEquals(newEmail, user.getEmail());
 	}
 	
 	@Test
@@ -64,22 +64,22 @@ class UserTest {
 	
 	@Test
 	void testCvu() {
-		String cvu = "7777777777777777777777";
+		String cvu = "0000000000000000000001";
 		User user = UserBuilder.aUser().withCvu(cvu).build();
 		Assert.assertEquals(cvu, user.getCvu());
 
-		String newCvu = "9999999999999999999999";
+		String newCvu = "0000000000000000000002";
 		user.setCvu(newCvu);
 		Assert.assertEquals(newCvu, user.getCvu());
 	}
 
 	@Test
 	void testWalletAddress() {
-		String walletAddress = "skrm34lc";
+		String walletAddress = "skrm34lC";
 		User user = UserBuilder.aUser().withWalletAddress(walletAddress).build();
 		Assert.assertEquals(walletAddress, user.getWalletAddress());
 		
-		String newWalletAddress = "lkf3jgmf";
+		String newWalletAddress = "lKf3jgmf";
 		user.setWalletAddress(newWalletAddress);
 		Assert.assertEquals(newWalletAddress, user.getWalletAddress());
 	}
@@ -108,12 +108,28 @@ class UserTest {
 		user.setPassword(password);
 		Assert.assertEquals(password, user.getPassword());
 		
-		String cvu = "7777777777777777777777";
+		String cvu = "0000000000000000000003";
 		user.setCvu(cvu);
 		Assert.assertEquals(cvu, user.getCvu());
 		
 		String walletAddress = "sdw2gb4d";
 		user.setWalletAddress(walletAddress);
+		Assert.assertEquals(walletAddress, user.getWalletAddress());
+	}
+	
+	@Test
+	void testUserInitializers() {
+		User user = new User();
+		
+		Integer cvuNumber = 7;
+		
+		String cvu = String.format("%022d", cvuNumber);
+		user.initializeCvu(cvuNumber);
+		Assert.assertEquals(cvu, user.getCvu());
+		
+		String walletAddressWithoutFormat = Base62.encode(cvuNumber);
+		String walletAddress = String.format("%0" + (8 - walletAddressWithoutFormat.length()) + "d%s", 0, walletAddressWithoutFormat);
+		user.initializeWalletAddress(cvuNumber);
 		Assert.assertEquals(walletAddress, user.getWalletAddress());
 	}
 }

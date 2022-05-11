@@ -1,7 +1,6 @@
 package ar.edu.unq.desapp.grupoi.backenddesappapl.model;
 
 public class Transaction {
-	
 	private Long id;
 	private IntentionBuySell transactionIntention;
 	private CryptoCurrency criptoActive;
@@ -14,64 +13,82 @@ public class Transaction {
 	private TransactionState state;
 	
 	public Long getId() {
-		return id;
+		return this.id;
 	}
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
 	public IntentionBuySell getTransactionIntention() {
-		return transactionIntention;
+		return this.transactionIntention;
 	}
+	
 	public void setTransactionIntention(IntentionBuySell transactionIntention) {
 		this.transactionIntention = transactionIntention;
 	}
+	
 	public CryptoCurrency getCriptoActive() {
-		return criptoActive;
+		return this.criptoActive;
 	}
+	
 	public void setCriptoActive(CryptoCurrency criptoActive) {
 		this.criptoActive = criptoActive;
 	}
+	
 	public Float getCryptoAmount() {
 		return cryptoAmount;
 	}
+	
 	public void setCryptoAmount(Float cryptoAmount) {
 		this.cryptoAmount = cryptoAmount;
 	}
+	
 	public Float getPrice() {
 		return price;
 	}
+	
 	public void setPrice(Float price) {
 		this.price = price;
 	}
+	
 	public Float getPesosArgAmount() {
 		return pesosArgAmount;
 	}
+	
 	public void setPesosArgAmount(Float pesosArgAmount) {
 		this.pesosArgAmount = pesosArgAmount;
 	}
+	
 	public String getUserName() {
-		return userName;
+		return this.userName;
 	}
+	
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+	
 	public String getUserLastName() {
-		return userLastName;
+		return this.userLastName;
 	}
+	
 	public void setUserLastName(String userLastName) {
 		this.userLastName = userLastName;
 	}
+	
 	public Operation getOperation() {
-		return operation;
+		return this.operation;
 	}
+	
 	public void setOperation(Operation operation) {
 		this.operation = operation;
 	}
+	
 	public TransactionState getState() {
-		return state;
+		return this.state;
 	}
+	
 	public void setState(TransactionState state) {
 		this.state = state;
 	}
-
 }

@@ -18,7 +18,7 @@ public class CryptoCurrency {
 	}
 
 	public Float getPrice() {
-		return price;
+		return this.price;
 	}
 
 	public void setPrice(Float price) {

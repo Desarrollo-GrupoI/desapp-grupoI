@@ -3,7 +3,6 @@ package ar.edu.unq.desapp.grupoi.backenddesappapl.dto;
 import javax.validation.constraints.*;
 
 public class RegisterUserDTO {
-	
 	@NotBlank(message = "User must have a name")
     @Size(min = 3, max = 30, message = "User name must be between 3 and 30 characters")
     private String name;
@@ -25,16 +24,17 @@ public class RegisterUserDTO {
     @Pattern(regexp = "^(?=.{6,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\\W).*$", message = "The password must contain at least one uppercase letter, one lowercase letter and one special character")
     private String password;
     
-    @NotBlank(message = "User must have a CVU")
-    @Size(min = 22, max = 22, message = "User CVU must be 22 characters")
-    private String cvu;
+ 
+    public RegisterUserDTO(String name, String surname, String email, String address, String password) {		
+		this.name = name;
+		this.surname = surname;
+		this.email = email;
+		this.address = address;
+		this.password = password;
+	}
 
-    @NotBlank(message = "User must have a wallet address")
-    @Size(min = 8, max = 8, message = "User wallet address must be 8 characters")
-    private String walletAddress;
-
-    public String getName() {
-        return name;
+	public String getName() {
+        return this.name;
     }
 
     public void setName(String name) {
@@ -42,7 +42,7 @@ public class RegisterUserDTO {
     }
 
     public String getSurname() {
-        return surname;
+        return this.surname;
     }
 
     public void setSurname(String surname) {
@@ -50,7 +50,7 @@ public class RegisterUserDTO {
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) {
@@ -58,7 +58,7 @@ public class RegisterUserDTO {
     }
 
     public String getAddress() {
-        return address;
+        return this.address;
     }
 
     public void setAddress(String address) {
@@ -66,26 +66,11 @@ public class RegisterUserDTO {
     }
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
     
-    public String getCvu() {
-        return cvu;
-    }
-
-    public void setCvu(String cvu) {
-        this.cvu = cvu;
-    }
-
-    public String getWalletAddress() {
-        return walletAddress;
-    }
-
-    public void setWalletAddress(String walletAddress) {
-        this.walletAddress = walletAddress;
-    }
 }

@@ -7,23 +7,22 @@ public class LastDayQuoteCurrency {
 	private Date date;
 	private Float price;
 	
-	
 	public LastDayQuoteCurrency(CryptoSymbol cryptoActive, Float price, Date date) {
 		this.cryptoActive = cryptoActive;
 		this.date = date;
 		this.price = price;
 	}
 
-	public CryptoSymbol getCryptoCurrency() {
+	public CryptoSymbol getCryptoActive() {
 		return this.cryptoActive;
 	}
 	
-	public void setCryptoCurrency(CryptoSymbol cryptoActive) {
+	public void setCryptoActive(CryptoSymbol cryptoActive) {
 		this.cryptoActive = cryptoActive;
 	}
 
 	public Float getPrice() {
-		return price;
+		return this.price;
 	}
 
 	public void setPrice(Float price) {
@@ -31,7 +30,7 @@ public class LastDayQuoteCurrency {
 	}
 	
 	public Date getDate() {
-		return date;
+		return this.date;
 	}
 
 	public void setDate(Date date) {

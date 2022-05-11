@@ -3,7 +3,6 @@ package ar.edu.unq.desapp.grupoi.backenddesappapl.model;
 import java.time.LocalDateTime;
 
 public class IntentionBuySell {
-	
 	private Long id;
 	private CryptoSymbol cryptoCurrency;
 	private Float cryptoAmount;
@@ -25,7 +24,7 @@ public class IntentionBuySell {
 	}
 	
 	public Long getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(Long id) {
@@ -41,7 +40,7 @@ public class IntentionBuySell {
 	}
 		
 	public Float getCryptoAmount() {
-		return cryptoAmount;
+		return this.cryptoAmount;
 	}
 
 	public void setCryptoAmount(Float cryptoAmount) {
@@ -49,7 +48,7 @@ public class IntentionBuySell {
 	}
 	
 	public Float getPrice() {
-		return price;
+		return this.price;
 	}
 
 	public void setPrice(Float price) {
@@ -57,7 +56,7 @@ public class IntentionBuySell {
 	}
 	
 	public Float getPesosArgAmount() {
-		return pesosArgAmount;
+		return this.pesosArgAmount;
 	}
 
 	public void setPesosArgAmount(Float pesosArgAmount) {
@@ -65,7 +64,7 @@ public class IntentionBuySell {
 	}
 	
 	public String getUserName() {
-		return userName ;
+		return this.userName ;
 	}
 	
 	public void setUserName(String userName) {
@@ -73,7 +72,7 @@ public class IntentionBuySell {
 	}
 	
 	public String getUserLastName() {
-		return userLastName;
+		return this.userLastName;
 	}
 
 	public void setUserLastName(String userLastName) {
@@ -81,7 +80,7 @@ public class IntentionBuySell {
 	}
 
 	public Operation getOperation() {
-		return operation;
+		return this.operation;
 	}
 
 	public void setOperation(Operation operation) {
@@ -89,11 +88,10 @@ public class IntentionBuySell {
 	}
 	
 	public LocalDateTime getDate() {
-		return date;
+		return this.date;
 	}
 
 	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
-
 }

@@ -5,18 +5,24 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import ar.edu.unq.desapp.grupoi.backenddesappapl.model.converters.Base62;
+
 @Entity
-@Table(name = "user")
+@Table
 public class User {
-	@Id
-	private String email;
+	@Column(length = 30)
 	private String name;
+	@Column(length = 30)
 	private String surname;
+	@Id
+	@Column(length = 30)
+	private String email;
+	@Column(length = 30)
 	private String address;
 	private String password;
-	@Column(unique = true)
+	@Column(length = 22)
 	private String cvu;
-	@Column(unique = true)
+	@Column(length = 8)
 	private String walletAddress;
 
 	public User() {}
@@ -89,5 +95,14 @@ public class User {
 
 	public void setWalletAddress(String walletAddress) {
 		this.walletAddress = walletAddress;
+	}
+	
+	public void initializeCvu(Integer cvuNumber) {
+		this.cvu = String.format("%022d", cvuNumber);
+	}
+	
+	public void initializeWalletAddress(Integer cvuNumber) {
+		String base62Number = Base62.encode(cvuNumber);
+		this.walletAddress = String.format("%0" + (8 - base62Number.length()) + "d%s", 0, base62Number);
 	}
 }
