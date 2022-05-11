@@ -34,6 +34,12 @@ public class User {
 		this.address = address;
 		this.password = password;
 	}
+
+	public User(String name, String surname, String email, String address, String password, String cvu, String walletAddress) {
+		this(name, surname, email, address, password);
+		this.cvu = cvu;
+		this.walletAddress = walletAddress;
+	}
 	
 	public String getName() {
 		return this.name;

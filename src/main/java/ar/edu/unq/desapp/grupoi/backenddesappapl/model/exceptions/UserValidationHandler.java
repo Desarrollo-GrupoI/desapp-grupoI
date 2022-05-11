@@ -25,18 +25,7 @@ public class UserValidationHandler {
 			errors.put(fieldName, message);
 		});
 		return new ResponseEntity<Object>(errors, HttpStatus.BAD_REQUEST);
-	}
-	
-	
-	@ExceptionHandler(DataAccessException.class)
-    public ResponseEntity<Map<String, Object>> handleDataAccessExceptions(DataAccessException e) {
-        Map<String, Object> response = new HashMap<>();
-
-        response.put("message", e.getMostSpecificCause().getMessage());
-        
-        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
+	}	
 }
 
    
