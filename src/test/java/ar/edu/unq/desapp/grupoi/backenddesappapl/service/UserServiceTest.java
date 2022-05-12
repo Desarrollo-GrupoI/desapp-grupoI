@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupoi.backenddesappapl.service;
 
 import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import java.util.ArrayList;
@@ -11,6 +12,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterUserDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.UserDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Cvu;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.User;
@@ -20,33 +23,30 @@ import ar.edu.unq.desapp.grupoi.backenddesappapl.repositories.UserRepository;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
-	
-	@Mock
-    private UserRepository userRepository;
-	
 	@Mock
 	private CvuRepository cvuRepository;
-	
+	@Mock
+    private UserRepository userRepository;		
 	@InjectMocks
     private UserService userService;
-	
-	@Mock
-	private Cvu cvu;
       
-//    @Test
-//    public void saveUser() {
-//		
-//		RegisterUserDTO userDTO =  new RegisterUserDTO("nameTest","surnameTest","test@gmail.com","addressTest","123Test#");				
-//		User user = new User("nameTest","surnameTest","test@gmail.com","addressTest","123Test#");
-//		
-//		when(userService.save(userDTO)).thenReturn(user);
-//		
-//		User actualUser = userService.save(userDTO);
-//		
-//        Assertions.assertEquals(user, actualUser);
-//        verify(userRepository, atLeastOnce()).save(user);
-//    }
-     
+    @Test
+    public void saveUser() {
+		RegisterUserDTO userDTO =  new RegisterUserDTO("nameTest","surnameTest","test@gmail.com","addressTest","123Test#");
+		
+		User user = new User(userDTO.getName(), userDTO.getSurname(), userDTO.getEmail(), userDTO.getAddress(), userDTO.getPassword(), "0000000000000000000001", "00000001");
+		Cvu cvu = new Cvu();
+		cvu.setNumber(new Integer(1));
+		
+		when(userRepository.save(any())).thenReturn(user);
+		when(cvuRepository.save(any())).thenReturn(cvu);
+		
+		User actualUser = userService.save(userDTO);
+		
+        Assertions.assertEquals(user.getEmail(), actualUser.getEmail());
+        verify(userRepository, atLeastOnce()).save(any());
+        verify(cvuRepository, atLeastOnce()).save(any());
+    }
     
     @Test
     public void findAll() {

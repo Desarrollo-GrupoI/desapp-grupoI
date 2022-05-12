@@ -1,8 +1,6 @@
 package ar.edu.unq.desapp.grupoi.backenddesappapl.webservice;
 
 import java.util.List;
-import java.util.Optional;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +27,6 @@ public class UserRestController {
 		userService.save(userDTO);
 		return ResponseEntity.ok().body("The user was registered");
 	}
-	
 		
 	@GetMapping(path = "/get/{userEmail}")
 	public ResponseEntity<User> findById(@PathVariable String userEmail) {

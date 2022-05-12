@@ -3,7 +3,6 @@ package ar.edu.unq.desapp.grupoi.backenddesappapl.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,26 +20,23 @@ public class UserService {
 	private CvuRepository cvuRepository;
 	@Autowired
 	private UserRepository userRepository;
-	
 				
 	@Transactional
 	public User save(RegisterUserDTO userDTO) {
-		Cvu cvu = cvuRepository.save(new Cvu());
-		User user = this.userRepository.save(
-				new User(
-						userDTO.getName(),
-						userDTO.getSurname(),
-						userDTO.getEmail(),
-						userDTO.getAddress(),
-						userDTO.getPassword()
-						));
+		Cvu cvu = this.cvuRepository.save(new Cvu());
+		User user = new User(
+				userDTO.getName(),
+				userDTO.getSurname(),
+				userDTO.getEmail(),
+				userDTO.getAddress(),
+				userDTO.getPassword()
+				);
 
 		user.initializeCvu(cvu.getNumber());
 		user.initializeWalletAddress(cvu.getNumber());
 	
 		return this.userRepository.save(user);
-	} 
-	
+	}
 	
 	public List<UserDTO> findAll() {
 		List<User> users =  (List<User>) userRepository.findAll();
@@ -57,7 +53,6 @@ public class UserService {
 		};		
 		return usersDTO;
 	}
-	
 
 	public User findById(String email) {
 		try {
