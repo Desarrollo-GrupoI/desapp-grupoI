@@ -63,7 +63,7 @@ public class UserServiceTest {
     	
     	Assertions.assertEquals(2, userDTOList.size());
     	verify(userRepository, atLeastOnce()).findAll();
-    } 
+    }  
     
     
     
