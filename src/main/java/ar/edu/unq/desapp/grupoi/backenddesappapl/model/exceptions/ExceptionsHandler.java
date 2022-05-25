@@ -17,4 +17,9 @@ public class ExceptionsHandler {
 	public ResponseEntity<Object> exception(UserNotFound exception) {
 		return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
 	}
+	
+	@ExceptionHandler(value = CryptoActiveNotFound.class)
+	public ResponseEntity<Object> exception(CryptoActiveNotFound exception) {
+		return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+	}
 }
