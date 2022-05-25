@@ -18,8 +18,8 @@ public class ExceptionsHandler {
 		return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 	
-	@ExceptionHandler(value = CryptoActiveNotFound.class)
-	public ResponseEntity<Object> exception(CryptoActiveNotFound exception) {
+	@ExceptionHandler(value = CryptoSymbolNotFound.class)
+	public ResponseEntity<Object> exception(CryptoSymbolNotFound exception) {
 		return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 }
