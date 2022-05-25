@@ -23,7 +23,6 @@ public class RegisterUserDTO {
     @Size(min = 6, message = "Password must contain at least 6 characters")
     @Pattern(regexp = "^(?=.{6,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\\W).*$", message = "The password must contain at least one uppercase letter, one lowercase letter and one special character")
     private String password;
-    
  
     public RegisterUserDTO(String name, String surname, String email, String address, String password) {		
 		this.name = name;
@@ -72,5 +71,4 @@ public class RegisterUserDTO {
     public void setPassword(String password) {
         this.password = password;
     }
-    
 }

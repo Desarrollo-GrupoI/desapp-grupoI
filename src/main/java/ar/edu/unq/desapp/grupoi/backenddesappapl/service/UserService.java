@@ -34,6 +34,8 @@ public class UserService {
 
 		user.initializeCvu(cvu.getNumber());
 		user.initializeWalletAddress(cvu.getNumber());
+		
+		this.cvuRepository.delete(cvu);
 	
 		return this.userRepository.save(user);
 	}

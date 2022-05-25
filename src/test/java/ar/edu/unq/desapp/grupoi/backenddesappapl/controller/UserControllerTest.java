@@ -1,93 +1,81 @@
 package ar.edu.unq.desapp.grupoi.backenddesappapl.controller;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.web.servlet.MockMvc;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterUserDTO;
-import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.UserDTO;
-import ar.edu.unq.desapp.grupoi.backenddesappapl.model.User;
-import ar.edu.unq.desapp.grupoi.backenddesappapl.service.UserService;
-import ar.edu.unq.desapp.grupoi.backenddesappapl.webservice.UserRestController;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest(classes = ar.edu.unq.desapp.grupoi.backenddesappapl.SwaggerApiApplication.class)
+@AutoConfigureMockMvc
 public class UserControllerTest {
-	@Mock
-    private UserService userService;
-	@InjectMocks
-	private UserRestController userController;
+	@Autowired
+	private MockMvc mockMvc;
 	
 	@Test
-    public void registerOk() {
-		RegisterUserDTO userDTO =  new RegisterUserDTO("nameTest", "surnameTest", "test@gmail.com", "addressTest", "123Test#");
+	public void registerOk() throws Exception {
+		ObjectMapper objectMapper = new ObjectMapper();
 		
-		User user = new User(userDTO.getName(), userDTO.getSurname(), userDTO.getEmail(), userDTO.getAddress(), userDTO.getPassword(), "0000000000000000000001", "00000001");
-    	
-    	when(userService.save(any())).thenReturn(user);
-    	
-    	ResponseEntity<?> response = userController.register(userDTO);
-    	
-    	Assertions.assertEquals(200, response.getStatusCodeValue());
-    	Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
-    	Assertions.assertEquals("The user was registered", response.getBody());
-    	verify(userService, atLeastOnce()).save(userDTO);
-    }
-	
-	@Test
-    public void registerError() {
-		RegisterUserDTO userDTO =  new RegisterUserDTO("nameTest", "surnameTest", "test@gmail.com", "addressTest", "asdf");
+		RegisterUserDTO userDTO =  new RegisterUserDTO("nameTestB", "surnameTestB", "testB@gmail.com", "addressTestB", "123Test#B");
 		
-		User user = new User(userDTO.getName(), userDTO.getSurname(), userDTO.getEmail(), userDTO.getAddress(), userDTO.getPassword(), "0000000000000000000001", "00000001");
+		this.mockMvc.perform(post("/user/register")
+			.contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(userDTO))
+            .accept(MediaType.APPLICATION_JSON))
+        	.andExpect(status().isOk());
+	}
+	
+	@Test
+    public void registerError() throws Exception {
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		RegisterUserDTO userDTO =  new RegisterUserDTO("nameTestC", "surnameTestC", "testC@gmail.com", "addressTestC", "123TestC");
     	
-    	when(userService.save(any())).thenReturn(user);
-    	
-    	ResponseEntity<?> response = userController.register(userDTO);
-    	
-    	//Assertions.assertEquals(400, response.getStatusCodeValue());
-    	//Assertions.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    	verify(userService, atLeastOnce()).save(userDTO);
+		this.mockMvc.perform(post("/user/register")
+			.contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(userDTO))
+            .accept(MediaType.APPLICATION_JSON))
+        	.andExpect(status().isBadRequest());
     }
 	
 	@Test
-    public void findAll() {
-    	UserDTO userOne = new UserDTO("nameTest","surnameTest",1,"");
-    	UserDTO userTwo = new UserDTO("nameTest2","surnameTest2",2,"");
-    	
-    	List<UserDTO> userList = new ArrayList<>();
-    	userList.add(userOne);
-    	userList.add(userTwo);
-    	
-    	when(userService.findAll()).thenReturn(userList);
-    	
-    	List<UserDTO> userDTOList = userController.findAll();
-    	
-    	Assertions.assertEquals(2, userDTOList.size());
-    	verify(userService, atLeastOnce()).findAll();
+    public void findAll() throws Exception {
+    	this.mockMvc.perform(get("/user/getAll")
+    		.contentType(MediaType.APPLICATION_JSON))
+        	.andExpect(status().isOk());
     }
 	
 	@Test
-    public void findById() {
-    	User userOne = new User("nameTest","surnameTest","test@gmail.com","addressTest","123Test#");
-    	
-    	when(userService.findById("test@gmail.com")).thenReturn(userOne);
-    	
-    	ResponseEntity<User> actualUser = userController.findById("test@gmail.com");
-    	
-    	Assertions.assertEquals(actualUser.getBody().getEmail(), userOne.getEmail());
-    	verify(userService, atLeastOnce()).findById("test@gmail.com");
-    	
+    public void findByIdOk() throws Exception {
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		RegisterUserDTO userDTO =  new RegisterUserDTO("nameTest", "surnameTest", "testFindByOk@gmail.com", "addressTest", "123Test#");
+		
+		this.mockMvc.perform(post("/user/register")
+			.contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(userDTO))
+            .accept(MediaType.APPLICATION_JSON));
+		
+    	this.mockMvc.perform(get("/user/get/{userEmail}", "testFindByOk@gmail.com")
+			.contentType(MediaType.APPLICATION_JSON))
+        	.andExpect(status().isOk())
+			.andExpect(MockMvcResultMatchers.jsonPath("$.name").value("nameTest"));
+    }
+	
+	@Test
+    public void findByIdError() throws Exception {    	
+    	this.mockMvc.perform(get("/user/get/{userEmail}", "inexistent@hotmail.com")
+			.contentType(MediaType.APPLICATION_JSON))
+        	.andExpect(status().isBadRequest());
     }
 }
