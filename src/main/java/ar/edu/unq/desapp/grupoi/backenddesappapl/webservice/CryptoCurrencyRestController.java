@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupoi.backenddesappapl.webservice;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,4 +31,9 @@ public class CryptoCurrencyRestController {
 		List<CryptoCurrency> cryptos = cryptoService.getCryptoSymbols();
 		return ResponseEntity.ok().body(cryptos);
 	}
+	
+//	@GetMapping(path = "/get/updateCryptos")
+//	public ResponseEntity<Map<String,Object>> asd() {
+//		return ResponseEntity.ok().body(cryptoService.asd());
+//	}
 }
