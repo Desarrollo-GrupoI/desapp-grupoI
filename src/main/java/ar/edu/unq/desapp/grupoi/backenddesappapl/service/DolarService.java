@@ -7,26 +7,25 @@ import org.springframework.web.client.RestTemplate;
 
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.DolarCasasDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.DolarValueDTO;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.DolarOficialNotFound;
 
 @Service
 public class DolarService {
-	
 	private RestTemplate template = new RestTemplate();
-	
 	private String urlDolar = "https://www.dolarsi.com/api/api.php?type=dolar";
 	
-	
-	public DolarValueDTO getDolarOficialValue() {
+	public Float getDolarOficialSellValue() {
 		ResponseEntity<DolarCasasDTO[]> dolarEntity = template.getForEntity(urlDolar, DolarCasasDTO[].class);
 		
 		DolarValueDTO dolarOficial = null;
 		for(DolarCasasDTO dolarCasa : dolarEntity.getBody()) {
-			if (StringUtils.equals(dolarCasa.getCasa().getNombre(), "Oficial"))
-				dolarOficial = dolarCasa.getCasa();			
+			if(StringUtils.equals(dolarCasa.getCasa().getName(), "Oficial"))
+				dolarOficial = dolarCasa.getCasa();
 		}
 		
-		return dolarOficial;
+		if(dolarOficial == null)
+			throw new DolarOficialNotFound("The dollar's sell value is not found");
 		
+		return dolarOficial.getSellValue();
 	}
-
 }

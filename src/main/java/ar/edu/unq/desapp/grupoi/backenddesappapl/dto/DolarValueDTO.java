@@ -1,49 +1,46 @@
 package ar.edu.unq.desapp.grupoi.backenddesappapl.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class DolarValueDTO {
+	@JsonProperty("compra")
+	private String buyValue;
 	
-	private String compra;
-	private String venta;
-	private String nombre;
+	@JsonProperty("venta")
+	private String sellValue;
 	
+	@JsonProperty("nombre")
+	private String name;
+
 	public DolarValueDTO() {}
-	
-	public DolarValueDTO(String compra, String venta, String nombre) {
-		this.compra = compra;
-		this.venta = venta;
-		this.nombre = nombre;
+
+	public DolarValueDTO(String buyValue, String sellValue, String name) {
+		this.buyValue = buyValue;
+		this.sellValue = sellValue;
+		this.name = name;
 	}
 
-	public Float getCompra() {
-		String compra = this.compra.replace(",", ".");
-		return Float.valueOf(compra);
+	public Float getBuyValue() {
+		return Float.valueOf(this.buyValue.replace(",", "."));
 	}
 
-	public void setCompra(String compra) {
-		this.compra = compra;
+	public void setBuyValue(String buyValue) {
+		this.buyValue = buyValue;
 	}
 
-	public Float getVenta() {
-		String venta = this.venta.replace(",", ".");
-		return Float.valueOf(venta);
+	public Float getSellValue() {
+		return Float.valueOf(this.sellValue.replace(",", "."));
 	}
 
-	public void setVenta(String venta) {
-		this.venta = venta;
+	public void setSellValue(String sellValue) {
+		this.sellValue = sellValue;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public String getName() {
+		return this.name;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setName(String name) {
+		this.name = name;
 	}
-
-	
-	
-	
-	
-	
 }
-

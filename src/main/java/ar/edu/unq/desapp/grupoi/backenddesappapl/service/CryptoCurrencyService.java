@@ -18,7 +18,6 @@ import ar.edu.unq.desapp.grupoi.backenddesappapl.model.utils.ValidCryptoSymbol;
 public class CryptoCurrencyService {
 	private String urlBase = "https://api1.binance.com/api/v3/ticker/price?symbol=";
 	private RestTemplate template = new RestTemplate();
-	
 	private List<CryptoCurrency> cryptos;
 	private LocalDateTime time;
 	

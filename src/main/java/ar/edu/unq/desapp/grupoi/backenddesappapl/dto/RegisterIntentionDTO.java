@@ -1,52 +1,73 @@
 package ar.edu.unq.desapp.grupoi.backenddesappapl.dto;
 
-import ar.edu.unq.desapp.grupoi.backenddesappapl.model.CryptoSymbol;
-import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Operation;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 public class RegisterIntentionDTO {
+	@NotBlank(message = "The intention must have a crypto symbol")
+	private String cryptoSymbol;
 	
-	private CryptoSymbol cryptoCurrency;
-	private Float cryptoAmount;
-	private Float price;
+	@NotNull(message = "The intention must have a crypto amount")
+    @Pattern(regexp = "^[0-9]+(\\,[0-9]+)?$", message = "Must be a valid crypto amount")
+	private String cryptoAmount;
+	
+	@NotNull(message = "The intention must have a price")
+    @Pattern(regexp = "^[0-9]+(\\,[0-9]+)?$", message = "Must be a valid price")
+	private String price;
+	
+	@NotBlank(message = "The intention must have an e-mail")
+    @Pattern(regexp = "^[a-zA-Z]+[a-zA-Z._-]*@[a-zA-Z]+\\.[a-zA-Z^s]+$", message = "Must be a valid email")
 	private String userEmail;
-	private Operation operation;
+	
+	@NotBlank(message = "The intention must have an operation")
+	private String operation;
 		
-	public RegisterIntentionDTO(CryptoSymbol cryptoCurrency, Float cryptoAmount, Float price,String userEmail, Operation operation) {
-		this.cryptoCurrency = cryptoCurrency;
+	public RegisterIntentionDTO(String cryptoSymbol, String cryptoAmount, String price, String userEmail, String operation) {
+		this.cryptoSymbol = cryptoSymbol;
 		this.cryptoAmount = cryptoAmount;
 		this.price = price;
 		this.userEmail = userEmail;
 		this.operation = operation;
 	}
-	public CryptoSymbol getCryptoCurrency() {
-		return cryptoCurrency;
+
+	public String getCryptoSymbol() {
+		return this.cryptoSymbol;
 	}
-	public void setCryptoCurrency(CryptoSymbol cryptoCurrency) {
-		this.cryptoCurrency = cryptoCurrency;
+
+	public void setCryptoSymbol(String cryptoSymbol) {
+		this.cryptoSymbol = cryptoSymbol;
 	}
+
 	public Float getCryptoAmount() {
-		return cryptoAmount;
+		return Float.valueOf(this.cryptoAmount.replace(",", "."));
 	}
-	public void setCryptoAmount(Float cryptoAmount) {
+
+	public void setCryptoAmount(String cryptoAmount) {
 		this.cryptoAmount = cryptoAmount;
 	}
+
 	public Float getPrice() {
-		return price;
+		return Float.valueOf(this.price.replace(",", "."));
 	}
-	public void setPrice(Float price) {
+
+	public void setPrice(String price) {
 		this.price = price;
 	}
+
 	public String getUserEmail() {
-		return userEmail;
+		return this.userEmail;
 	}
+
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
 	}
-	public Operation getOperation() {
-		return operation;
-	}
-	public void setOperation(Operation operation) {
-		this.operation = operation;
+
+	public String getOperation() {
+		return this.operation;
 	}
 
+	public void setOperation(String operation) {
+		this.operation = operation;
+	}
 }

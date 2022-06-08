@@ -16,7 +16,6 @@ import ar.edu.unq.desapp.grupoi.backenddesappapl.service.CryptoCurrencyService;
 @RestController
 @RequestMapping("/crypto")
 public class CryptoCurrencyRestController {
-
 	@Autowired
 	private CryptoCurrencyService cryptoService;
 	
