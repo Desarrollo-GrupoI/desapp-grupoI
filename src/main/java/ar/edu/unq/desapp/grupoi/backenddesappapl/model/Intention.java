@@ -18,24 +18,17 @@ import javax.persistence.Table;
 public class Intention {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
 	private Integer id;
 	@Enumerated(EnumType.STRING)
-	@Column(name = "crypto_symbol")
 	private CryptoSymbol cryptoSymbol;
-	@Column(name = "crypto_amount")
 	private Float cryptoAmount;
-	@Column(name = "price")
 	private Float price;
-	@Column(name = "pesos_amount")
 	private Float pesosArgAmount;
 	@OneToOne
 	@JoinColumn(name="user_email")
 	private User user;
 	@Enumerated(EnumType.STRING)
-	@Column(name = "operation")
 	private Operation operation;
-	@Column(name = "date")
 	private LocalDateTime date = LocalDateTime.now();
 	
 	public Intention() {}
