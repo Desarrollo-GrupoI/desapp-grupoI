@@ -1,87 +1,66 @@
 package ar.edu.unq.desapp.grupoi.backenddesappapl.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "transaction")
 public class Transaction {
-	private Long id;
-	private IntentionBuySell transactionIntention;
-	private CryptoCurrency criptoActive;
-	private Float cryptoAmount;
-	private Float price;
-	private Float pesosArgAmount;
-	private String userName;
-	private String userLastName;
-	private Operation operation;
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Integer id;
+	@OneToOne
+	@JoinColumns({
+		@JoinColumn(name = "transaction_intention_id", referencedColumnName = "id"),
+		@JoinColumn(name = "cripto_symbol", referencedColumnName = "crypto_symbol"),
+		@JoinColumn(name = "cripto_amount", referencedColumnName = "crypto_amount"),
+		@JoinColumn(name = "price", referencedColumnName = "price"),
+		@JoinColumn(name = "pesos_amount", referencedColumnName = "pesos_amount"),
+		@JoinColumn(name = "operation", referencedColumnName = "operation")
+	})
+	private Intention transactionIntention;
+	@OneToOne
+    @JoinColumn(name = "user_email", referencedColumnName = "email")
+	private User user;
+	@Column(name = "state")
 	private TransactionState state;
 	
-	public Long getId() {
+	public Transaction(Intention transactionIntention, User user) {
+		this.transactionIntention = transactionIntention;
+		this.user = user;
+		this.state = TransactionState.WAITING;
+	}
+	
+	public Integer getId() {
 		return this.id;
 	}
 	
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	
-	public IntentionBuySell getTransactionIntention() {
+	public Intention getTransactionIntention() {
 		return this.transactionIntention;
 	}
 	
-	public void setTransactionIntention(IntentionBuySell transactionIntention) {
+	public void setTransactionIntention(Intention transactionIntention) {
 		this.transactionIntention = transactionIntention;
 	}
 	
-	public CryptoCurrency getCriptoActive() {
-		return this.criptoActive;
+	public User getUser() {
+		return this.user;
 	}
 	
-	public void setCriptoActive(CryptoCurrency criptoActive) {
-		this.criptoActive = criptoActive;
-	}
-	
-	public Float getCryptoAmount() {
-		return cryptoAmount;
-	}
-	
-	public void setCryptoAmount(Float cryptoAmount) {
-		this.cryptoAmount = cryptoAmount;
-	}
-	
-	public Float getPrice() {
-		return price;
-	}
-	
-	public void setPrice(Float price) {
-		this.price = price;
-	}
-	
-	public Float getPesosArgAmount() {
-		return pesosArgAmount;
-	}
-	
-	public void setPesosArgAmount(Float pesosArgAmount) {
-		this.pesosArgAmount = pesosArgAmount;
-	}
-	
-	public String getUserName() {
-		return this.userName;
-	}
-	
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-	
-	public String getUserLastName() {
-		return this.userLastName;
-	}
-	
-	public void setUserLastName(String userLastName) {
-		this.userLastName = userLastName;
-	}
-	
-	public Operation getOperation() {
-		return this.operation;
-	}
-	
-	public void setOperation(Operation operation) {
-		this.operation = operation;
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	public TransactionState getState() {

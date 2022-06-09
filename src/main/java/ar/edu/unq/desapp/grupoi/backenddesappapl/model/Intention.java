@@ -1,6 +1,8 @@
 package ar.edu.unq.desapp.grupoi.backenddesappapl.model;
 
 import java.time.LocalDateTime;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -13,26 +15,33 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "transaction_intention")
-public class IntentionBuySell {
+public class Intention {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@Column(name = "id")
+	private Integer id;
 	@Enumerated(EnumType.STRING)
-	private CryptoSymbol cryptoCurrency;
+	@Column(name = "crypto_symbol")
+	private CryptoSymbol cryptoSymbol;
+	@Column(name = "crypto_amount")
 	private Float cryptoAmount;
+	@Column(name = "price")
 	private Float price;
+	@Column(name = "pesos_amount")
 	private Float pesosArgAmount;
 	@OneToOne
 	@JoinColumn(name="user_email")
 	private User user;
 	@Enumerated(EnumType.STRING)
+	@Column(name = "operation")
 	private Operation operation;
+	@Column(name = "date")
 	private LocalDateTime date = LocalDateTime.now();
 	
-	public IntentionBuySell() {}
+	public Intention() {}
 	
-	public IntentionBuySell(CryptoSymbol cryptoCurrency,Float cryptoAmount, Float price, Float pesosArgAmount, User user, Operation operation) {
-		this.cryptoCurrency = cryptoCurrency;
+	public Intention(CryptoSymbol cryptoSymbol,Float cryptoAmount, Float price, Float pesosArgAmount, User user, Operation operation) {
+		this.cryptoSymbol = cryptoSymbol;
 		this.cryptoAmount = cryptoAmount;
 		this.price = price;
 		this.pesosArgAmount = pesosArgAmount;
@@ -40,20 +49,20 @@ public class IntentionBuySell {
 		this.operation = operation;
 	}
 	
-	public Long getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	
-	public CryptoSymbol getCryptoCurrency() {
-		return this.cryptoCurrency;
+	public CryptoSymbol getCryptoSymbol() {
+		return this.cryptoSymbol;
 	}
 	
-	public void setCryptoCurrency(CryptoSymbol cryptoCurrency) {
-		this.cryptoCurrency = cryptoCurrency;
+	public void setCryptoSymbol(CryptoSymbol cryptoSymbol) {
+		this.cryptoSymbol = cryptoSymbol;
 	}
 		
 	public Float getCryptoAmount() {

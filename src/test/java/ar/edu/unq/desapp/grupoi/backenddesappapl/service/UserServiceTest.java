@@ -17,7 +17,7 @@ import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterUserDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.UserDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Cvu;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.User;
-import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.UserNotFound;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.EntityNotFound;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.repositories.CvuRepository;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.repositories.UserRepository;
 
@@ -83,7 +83,7 @@ public class UserServiceTest {
     @Test
     public void userDoesNotExist() {
     	
-    	UserNotFound exception = Assertions.assertThrows(UserNotFound.class, () -> {
+    	EntityNotFound exception = Assertions.assertThrows(EntityNotFound.class, () -> {
     		 userService.findById("emailTest@gmail.com");
     	 });
     	 

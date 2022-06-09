@@ -7,7 +7,7 @@ import org.springframework.web.client.RestTemplate;
 
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.DolarCasasDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.DolarValueDTO;
-import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.DolarOficialNotFound;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.EntityNotFound;
 
 @Service
 public class DolarService {
@@ -24,7 +24,7 @@ public class DolarService {
 		}
 		
 		if(dolarOficial == null)
-			throw new DolarOficialNotFound("The dollar's sell value is not found");
+			throw new EntityNotFound("The dollar's sell value is not found");
 		
 		return dolarOficial.getSellValue();
 	}

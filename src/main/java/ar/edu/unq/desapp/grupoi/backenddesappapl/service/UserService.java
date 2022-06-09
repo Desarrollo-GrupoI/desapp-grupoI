@@ -10,7 +10,7 @@ import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterUserDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.UserDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Cvu;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.User;
-import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.UserNotFound;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.EntityNotFound;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.repositories.CvuRepository;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.repositories.UserRepository;
 
@@ -41,30 +41,24 @@ public class UserService {
 	}
 	
 	public List<UserDTO> findAll() {
-		List<User> users =  (List<User>) userRepository.findAll();
+		List<User> users =  (List<User>) this.userRepository.findAll();
 		List<UserDTO> usersDTO = new ArrayList<UserDTO>();
-		for (User user: users) {
-			usersDTO.add(
-					new UserDTO(
-							user.getName(),
-							user.getSurname(),
-							0,
-							""
-							)
-					);
-		};		
+		for(User user: users) {
+			usersDTO.add(new UserDTO(user.getName(), user.getSurname(), 0, ""));
+		};
+		
 		return usersDTO;
 	}
 
 	public User findById(String email) {
 		try {
-			return userRepository.findById(email).get();
+			return this.userRepository.findById(email).get();
 		} catch(NoSuchElementException e) {
-			throw new UserNotFound("The user was not found");
+			throw new EntityNotFound("The user was not found");
 		}
 	}
 	
 	public void deleteById(String email) {
-		userRepository.deleteById(email);
+		this.userRepository.deleteById(email);
 	}
 }

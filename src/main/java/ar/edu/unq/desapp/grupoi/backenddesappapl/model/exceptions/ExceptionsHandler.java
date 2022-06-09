@@ -18,19 +18,14 @@ public class ExceptionsHandler {
 		return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 	
-	@ExceptionHandler(value = UserNotFound.class)
-	public ResponseEntity<Object> exception(UserNotFound exception) {
+	@ExceptionHandler(value = EntityNotFound.class)
+	public ResponseEntity<Object> exception(EntityNotFound exception) {
 		return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 	
 	@ExceptionHandler(value = CryptoSymbolNotFound.class)
 	public ResponseEntity<Object> exception(CryptoSymbolNotFound exception) {
 		return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
-	}
-	
-	@ExceptionHandler(value = DolarOficialNotFound.class)
-	public ResponseEntity<Object> exception(DolarOficialNotFound exception) {
-		return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
