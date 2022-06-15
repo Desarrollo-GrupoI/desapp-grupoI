@@ -9,7 +9,7 @@ public class RegisterTransactionDTO {
 	private Integer intentionId;
 	@NotBlank(message = "The transaction must have a user ID")
 	private String userId;
-	
+	 
 	public RegisterTransactionDTO(Integer intentionId, String userId) {
 		this.intentionId = intentionId;
 		this.userId = userId;
@@ -27,4 +27,9 @@ public class RegisterTransactionDTO {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+	
+	 @Override
+	    public String toString() {
+			return "{\"intentionId\": \"" + this.intentionId + "\", \"userId\": \"" + this.userId + "\"}";
+	    }
 }

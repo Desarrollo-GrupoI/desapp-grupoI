@@ -66,7 +66,7 @@ public class UserServiceTest {
     }  
     
     
-    
+     
     @Test
     public void findById() {
     	User userOne = new User("nameTest","surnameTest","test@gmail.com","addressTest","123Test#");

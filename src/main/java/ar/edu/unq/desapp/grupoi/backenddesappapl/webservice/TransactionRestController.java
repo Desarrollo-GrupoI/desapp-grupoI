@@ -36,7 +36,7 @@ public class TransactionRestController {
 	public ResponseEntity<?> register(@Valid @RequestBody RegisterTransactionDTO transaction) {
 		this.transactionService.saveTransaction(transaction);
 		return ResponseEntity.ok().body("The transaction was registered");
-	}
+	} 
 	
 	//Intention transaction
 	@GetMapping(path = "/intention/getAll")

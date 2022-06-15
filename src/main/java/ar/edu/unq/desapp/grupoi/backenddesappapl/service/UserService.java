@@ -56,7 +56,7 @@ public class UserService {
 		} catch(NoSuchElementException e) {
 			throw new EntityNotFound("The user was not found");
 		}
-	}
+	} 
 	
 	public void deleteById(String email) {
 		this.userRepository.deleteById(email);

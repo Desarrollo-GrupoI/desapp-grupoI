@@ -36,13 +36,12 @@ public class TransactionService {
 	private DolarService dolarService;
 	@Autowired
 	private DateService dateService;
-	
+	 
 	@Transactional
 	public void saveIntention(RegisterIntentionDTO intentionDTO) {
 		CryptoSymbol cryptoSymbol = new ValidCryptoSymbol(intentionDTO.getCryptoSymbol()).getCryptoSymbol();
 		Operation operation = new ValidOperation(intentionDTO.getOperation()).getOperation();
 		Float dolarOficialSellValue = dolarService.getDolarOficialSellValue();
-		
 		
 		Intention intention = 
 				new Intention(
@@ -56,7 +55,7 @@ public class TransactionService {
 					);
 
 		this.intentionRepository.save(intention);
-	}
+	} 
 	
 	@Transactional
 	public void saveTransaction(RegisterTransactionDTO transactionDTO) {
@@ -87,7 +86,7 @@ public class TransactionService {
 					);
 		}
 		return intentionsDTO;
-	}
+	} 
 	
 	public Intention findIntentionById(Integer intentionId) {
 		try {
