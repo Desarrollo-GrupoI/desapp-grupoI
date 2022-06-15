@@ -27,5 +27,4 @@ public class RegisterTransactionDTO {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-
 }

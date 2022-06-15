@@ -15,8 +15,10 @@ import ar.edu.unq.desapp.grupoi.backenddesappapl.model.CryptoSymbol;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Intention;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Operation;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Transaction;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.model.TransactionState;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.User;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.EntityNotFound;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.model.utils.DateService;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.utils.ValidCryptoSymbol;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.utils.ValidOperation;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.repositories.IntentionRepository;
@@ -26,15 +28,14 @@ import ar.edu.unq.desapp.grupoi.backenddesappapl.repositories.TransactionReposit
 public class TransactionService {
 	@Autowired
 	private IntentionRepository intentionRepository;
-	
 	@Autowired
 	private TransactionRepository transactionRepository;
-	
 	@Autowired
 	private UserService userService;
-	
 	@Autowired
 	private DolarService dolarService;
+	@Autowired
+	private DateService dateService;
 	
 	@Transactional
 	public void saveIntention(RegisterIntentionDTO intentionDTO) {
@@ -50,7 +51,8 @@ public class TransactionService {
 					intentionDTO.getPrice(),
 					intentionDTO.getPrice() * dolarOficialSellValue,
 					userService.findById(intentionDTO.getUserEmail()),
-					operation
+					operation,
+					this.dateService.getDate()
 					);
 
 		this.intentionRepository.save(intention);
@@ -61,7 +63,7 @@ public class TransactionService {
 		User user = this.userService.findById(transactionDTO.getUserId());
 		Intention intention = this.findIntentionById(transactionDTO.getIntentionId());
 		
-		Transaction transaction = new Transaction(intention, user);
+		Transaction transaction = new Transaction(intention, user, TransactionState.PENDING);
 
 		this.transactionRepository.save(transaction);
 	}
@@ -69,7 +71,7 @@ public class TransactionService {
 	public List<IntentionDTO> findAllIntention() {
 		List<Intention> intentions = (List<Intention>)this.intentionRepository.findAll();
 		List<IntentionDTO> intentionsDTO = new ArrayList<IntentionDTO>();
-		for (Intention intention : intentions) {
+		for(Intention intention : intentions) {
 			intentionsDTO.add(
 					new IntentionDTO(
 							intention.getDate(), 
@@ -80,7 +82,9 @@ public class TransactionService {
 							intention.getUser().getName(),
 							intention.getUser().getSurname(),
 							"0",
-							"30"));
+							"30"
+							)
+					);
 		}
 		return intentionsDTO;
 	}

@@ -1,8 +1,6 @@
 package ar.edu.unq.desapp.grupoi.backenddesappapl.model;
 
 import java.time.LocalDateTime;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -29,17 +27,18 @@ public class Intention {
 	private User user;
 	@Enumerated(EnumType.STRING)
 	private Operation operation;
-	private LocalDateTime date = LocalDateTime.now();
+	private LocalDateTime date;
 	
 	public Intention() {}
 	
-	public Intention(CryptoSymbol cryptoSymbol,Float cryptoAmount, Float price, Float pesosArgAmount, User user, Operation operation) {
+	public Intention(CryptoSymbol cryptoSymbol,Float cryptoAmount, Float price, Float pesosArgAmount, User user, Operation operation, LocalDateTime date) {
 		this.cryptoSymbol = cryptoSymbol;
 		this.cryptoAmount = cryptoAmount;
 		this.price = price;
 		this.pesosArgAmount = pesosArgAmount;
 		this.user= user;
 		this.operation = operation;
+		this.date = date;
 	}
 	
 	public Integer getId() {

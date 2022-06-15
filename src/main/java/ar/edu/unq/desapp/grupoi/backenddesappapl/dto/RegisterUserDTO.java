@@ -71,4 +71,9 @@ public class RegisterUserDTO {
     public void setPassword(String password) {
         this.password = password;
     }
+    
+    @Override
+    public String toString() {
+		return "{\"name\": \"" + this.name + "\", \"surname\": \"" + this.surname + "\", \"email\": \"" + this.email + "\", \"address\": \"" + this.address + "\", \"password\": \"" + this.password + "\"}";
+    }
 }

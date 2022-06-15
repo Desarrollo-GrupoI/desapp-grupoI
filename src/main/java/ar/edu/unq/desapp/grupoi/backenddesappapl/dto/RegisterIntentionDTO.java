@@ -70,4 +70,9 @@ public class RegisterIntentionDTO {
 	public void setOperation(String operation) {
 		this.operation = operation;
 	}
+
+	@Override
+	public String toString() {
+		return "{\"cryptoSymbol\": \"" + this.cryptoSymbol + "\", \"cryptoAmount\": \"" + this.cryptoAmount + "\", \"price\": \"" + this.price + "\", \"userEmail\": \"" + this.userEmail + "\", \"operation\": \"" + this.operation + "\"}";
+	}
 }

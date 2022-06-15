@@ -15,6 +15,7 @@ import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterIntentionDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.CryptoSymbol;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Intention;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Operation;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.model.utils.DateService;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.utils.ValidCryptoSymbol;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.utils.ValidOperation;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.repositories.IntentionRepository;
@@ -34,6 +35,9 @@ public class IntentionServiceTest {
 	@InjectMocks
 	private DolarService dolarService;
 	
+	@InjectMocks
+	private DateService dateService;
+	
 	@Test
     public void saveIntention() {
 		
@@ -42,12 +46,15 @@ public class IntentionServiceTest {
 		Operation operation = new ValidOperation(intentionDTO.getOperation()).getOperation();
 		Float dolarOficialSellValue = dolarService.getDolarOficialSellValue();
 		
-		Intention intention = new Intention(cryptoSymbol, 
-											intentionDTO.getCryptoAmount(), 
-											intentionDTO.getPrice(),
-											intentionDTO.getPrice() * dolarOficialSellValue,
-											userService.findById(intentionDTO.getUserEmail()), 
-											operation);
+		Intention intention = new Intention(
+				cryptoSymbol, 
+				intentionDTO.getCryptoAmount(), 
+				intentionDTO.getPrice(),
+				intentionDTO.getPrice() * dolarOficialSellValue,
+				userService.findById(intentionDTO.getUserEmail()), 
+				operation,
+				dateService.getDate()
+				);
 		
 		when(intentionRepository.save(any())).thenReturn(intention);
 		
@@ -56,5 +63,4 @@ public class IntentionServiceTest {
         Assertions.assertEquals(intention.getCryptoSymbol(), intentionDTO.getCryptoSymbol());
         verify(intentionRepository, atLeastOnce()).save(any());
     }
-
 }

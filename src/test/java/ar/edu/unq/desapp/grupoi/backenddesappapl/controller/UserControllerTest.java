@@ -8,8 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterUserDTO;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,26 +22,22 @@ public class UserControllerTest {
 	
 	@Test
 	public void registerOk() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper();
-		
 		RegisterUserDTO userDTO =  new RegisterUserDTO("nameTestB", "surnameTestB", "testB@gmail.com", "addressTestB", "123Test#B");
 		
 		this.mockMvc.perform(post("/user/register")
 			.contentType(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(userDTO))
+            .content(userDTO.toString())
             .accept(MediaType.APPLICATION_JSON))
         	.andExpect(status().isOk());
 	}
 	
 	@Test
     public void registerError() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper();
-		
 		RegisterUserDTO userDTO =  new RegisterUserDTO("nameTestC", "surnameTestC", "testC@gmail.com", "addressTestC", "123TestC");
     	
 		this.mockMvc.perform(post("/user/register")
 			.contentType(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(userDTO))
+            .content(userDTO.toString())
             .accept(MediaType.APPLICATION_JSON))
         	.andExpect(status().isBadRequest());
     }
@@ -57,13 +51,11 @@ public class UserControllerTest {
 	
 	@Test
     public void findByIdOk() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper();
-		
 		RegisterUserDTO userDTO =  new RegisterUserDTO("nameTest", "surnameTest", "testFindByOk@gmail.com", "addressTest", "123Test#");
 		
 		this.mockMvc.perform(post("/user/register")
 			.contentType(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(userDTO))
+            .content(userDTO.toString())
             .accept(MediaType.APPLICATION_JSON));
 		
     	this.mockMvc.perform(get("/user/get/{userEmail}", "testFindByOk@gmail.com")

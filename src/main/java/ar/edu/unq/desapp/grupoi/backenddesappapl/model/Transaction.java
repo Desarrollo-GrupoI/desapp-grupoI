@@ -1,5 +1,7 @@
 package ar.edu.unq.desapp.grupoi.backenddesappapl.model;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -26,74 +28,99 @@ public class Transaction {
 	@OneToOne
     @JoinColumn(name = "user_email", referencedColumnName = "email")
 	private User user;
-	//private String sendAddress;
+	private String sendAddress;
 	@Enumerated(EnumType.STRING)
 	private TransactionState state;
+	private LocalDateTime date = LocalDateTime.now();
 	
-	
-	
-	public Transaction(Intention transactionIntention, User user) {
+	public Transaction(Intention transactionIntention, User user, TransactionState state) {
 		this.transactionIntention = transactionIntention;
 		this.cryptoSymbol = transactionIntention.getCryptoSymbol();
 		this.cryptoAmount = transactionIntention.getCryptoAmount();
 		this.price = transactionIntention.getPrice();
 		this.pesosArgAmount = transactionIntention.getPesosArgAmount();
 		this.user = user;
-		//this.sendAddress = 
-		this.state = TransactionState.PENDING;
+		this.sendAddress = transactionIntention.getOperation() == Operation.SELL ? transactionIntention.getUser().getCvu() : transactionIntention.getUser().getWalletAddress();
+		this.state = state;
 	}
-	
-	
+
 	public Integer getId() {
 		return id;
 	}
+	
 	public void setId(Integer id) {
 		this.id = id;
 	}
+	
 	public Intention getTransactionIntention() {
 		return transactionIntention;
 	}
+	
 	public void setTransactionIntention(Intention transactionIntention) {
 		this.transactionIntention = transactionIntention;
 	}
+	
 	public CryptoSymbol getCryptoSymbol() {
 		return cryptoSymbol;
 	}
+	
 	public void setCryptoSymbol(CryptoSymbol cryptoSymbol) {
 		this.cryptoSymbol = cryptoSymbol;
 	}
+	
 	public Float getCryptoAmount() {
 		return cryptoAmount;
 	}
+	
 	public void setCryptoAmount(Float cryptoAmount) {
 		this.cryptoAmount = cryptoAmount;
 	}
+	
 	public Float getPrice() {
 		return price;
 	}
+	
 	public void setPrice(Float price) {
 		this.price = price;
 	}
+	
 	public Float getPesosArgAmount() {
 		return pesosArgAmount;
 	}
+	
 	public void setPesosArgAmount(Float pesosArgAmount) {
 		this.pesosArgAmount = pesosArgAmount;
 	}
+	
 	public User getUser() {
 		return user;
 	}
+	
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
+	public String getSendAddress() {
+		return sendAddress;
+	}
+
+	public void setSendAddress(String sendAddress) {
+		this.sendAddress = sendAddress;
+	}
+	
 	public TransactionState getState() {
 		return state;
 	}
+	
 	public void setState(TransactionState state) {
 		this.state = state;
 	}
 	
-	
-	
-	
+	public LocalDateTime getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDateTime date) {
+		this.date = date;
+	}
 }
