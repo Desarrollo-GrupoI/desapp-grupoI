@@ -42,6 +42,7 @@ public class TransactionService {
 		Operation operation = new ValidOperation(intentionDTO.getOperation()).getOperation();
 		Float dolarOficialSellValue = dolarService.getDolarOficialSellValue();
 		
+		
 		Intention intention = 
 				new Intention(
 					cryptoSymbol,
