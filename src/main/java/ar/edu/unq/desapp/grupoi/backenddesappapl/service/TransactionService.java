@@ -93,6 +93,6 @@ public class TransactionService {
 			return this.intentionRepository.findById(intentionId).get();
 		} catch(NoSuchElementException e) {
 			throw new EntityNotFound("The intention was not found");
-		}
+		} 
 	}
 }

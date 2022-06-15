@@ -90,7 +90,6 @@ public class UserServiceTest {
     	 Assertions.assertEquals("The user was not found", exception.getMessage());
     }
     
-    
     @Test
     public void deleteById() {
     	userService.deleteById("mail@gmail.com");
