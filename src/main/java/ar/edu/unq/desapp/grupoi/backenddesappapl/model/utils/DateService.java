@@ -7,11 +7,8 @@ import java.time.*;
 
 @Service
 public class DateService {
-	private ZoneOffset zoneOffset = ZoneOffset.ofHours(3);
-	private ZoneId zid = ZoneId.of("America/Buenos_Aires");
 	
 	public LocalDateTime getDate() {
-		//return LocalDateTime.now().atOffset(zoneOffset).toLocalDateTime();
-		return LocalDateTime.now(zid);
+		return LocalDateTime.now();
 	}
 }
