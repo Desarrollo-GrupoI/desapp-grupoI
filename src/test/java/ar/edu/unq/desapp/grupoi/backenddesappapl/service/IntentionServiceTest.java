@@ -15,12 +15,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.IntentionDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterIntentionDTO;
-import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterUserDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.CryptoSymbol;
-import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Cvu;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Intention;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Operation;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.User;
@@ -36,7 +33,7 @@ import ar.edu.unq.desapp.grupoi.backenddesappapl.repositories.UserRepository;
 public class IntentionServiceTest {
 	
 	@InjectMocks
-	private TransactionService intentionService;
+	private IntentionService intentionService;
 	
 	@Mock
 	private IntentionRepository intentionRepository;
@@ -105,7 +102,7 @@ public class IntentionServiceTest {
 		
 		when(intentionRepository.findAll()).thenReturn(intentions);
 		
-		List<IntentionDTO> intentionsDTO = intentionService.findAllIntention();
+		List<IntentionDTO> intentionsDTO = intentionService.findAll();
 		Assertions.assertEquals(2, intentionsDTO.size());
 		verify(intentionRepository, atLeastOnce()).findAll();
 		
@@ -115,7 +112,7 @@ public class IntentionServiceTest {
 	@Test
 	public void findIntentionById() {
 		EntityNotFound exception = Assertions.assertThrows(EntityNotFound.class, () -> {
-   		 intentionService.findIntentionById(32);
+   		 intentionService.findById(32);
    	 });
    	 
    	 Assertions.assertEquals("The intention was not found", exception.getMessage());

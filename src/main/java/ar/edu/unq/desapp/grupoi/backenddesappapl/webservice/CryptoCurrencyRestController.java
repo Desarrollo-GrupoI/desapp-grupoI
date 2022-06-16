@@ -31,8 +31,5 @@ public class CryptoCurrencyRestController {
 		return ResponseEntity.ok().body(cryptos);
 	}
 	
-//	@GetMapping(path = "/get/updateCryptos")
-//	public ResponseEntity<Map<String,Object>> asd() {
-//		return ResponseEntity.ok().body(cryptoService.asd());
-//	}
+
 }

@@ -31,7 +31,7 @@ public class TransactionControllerTest {
         	.andExpect(status().isOk());
 		
 		RegisterIntentionDTO intentionDTO =  new RegisterIntentionDTO("MATICUSDT","2,3","15,0","nacho@gmail.com","SELL");		
-		this.mockMvc.perform(post("/transaction/intention/register")
+		this.mockMvc.perform(post("/intention/register")
 				.contentType(MediaType.APPLICATION_JSON)
 	            .content(intentionDTO.toString())
 	            .accept(MediaType.APPLICATION_JSON))
@@ -57,7 +57,7 @@ public class TransactionControllerTest {
         	.andExpect(status().isOk());
 		
 		RegisterIntentionDTO intentionDTO =  new RegisterIntentionDTO("MATICUSDT","2,3","15,0","nacho@gmail.com","SELL");		
-		this.mockMvc.perform(post("/transaction/intention/register")
+		this.mockMvc.perform(post("/intention/register")
 				.contentType(MediaType.APPLICATION_JSON)
 	            .content(intentionDTO.toString())
 	            .accept(MediaType.APPLICATION_JSON))

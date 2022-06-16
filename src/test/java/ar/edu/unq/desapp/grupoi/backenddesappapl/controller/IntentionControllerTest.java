@@ -31,7 +31,7 @@ public class IntentionControllerTest {
 		
 		RegisterIntentionDTO intentionDTO =  new RegisterIntentionDTO("MATICUSDT","2,3","15,0","nacho@gmail.com","SELL");
 		
-		this.mockMvc.perform(post("/transaction/intention/register")
+		this.mockMvc.perform(post("/intention/register")
 				.contentType(MediaType.APPLICATION_JSON)
 	            .content(intentionDTO.toString())
 	            .accept(MediaType.APPLICATION_JSON))
@@ -42,7 +42,7 @@ public class IntentionControllerTest {
 	public void registerError() throws Exception {
 		RegisterIntentionDTO intentionDTO =  new RegisterIntentionDTO("MATICUSDT","5","10","inexistente@gmail.com","SELL");
 		
-		this.mockMvc.perform(post("/transaction/intention/register")
+		this.mockMvc.perform(post("/intention/register")
 				.contentType(MediaType.APPLICATION_JSON)
 	            .content(intentionDTO.toString())
 	            .accept(MediaType.APPLICATION_JSON))
@@ -51,7 +51,7 @@ public class IntentionControllerTest {
 	
 	@Test
     public void findAll() throws Exception {
-    	this.mockMvc.perform(get("/transaction/intention/getAll")
+    	this.mockMvc.perform(get("/intention/getAll")
     		.contentType(MediaType.APPLICATION_JSON))
         	.andExpect(status().isOk());
     }

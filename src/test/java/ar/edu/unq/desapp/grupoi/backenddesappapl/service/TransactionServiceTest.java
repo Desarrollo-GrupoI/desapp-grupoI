@@ -27,7 +27,10 @@ import ar.edu.unq.desapp.grupoi.backenddesappapl.repositories.UserRepository;
 public class TransactionServiceTest {
 	
 	@InjectMocks
-	private TransactionService intentionService;
+	private TransactionService transactionService;
+	
+	@Mock
+	private IntentionService intentionService;
 	
 	@Mock
 	private IntentionRepository intentionRepository;
@@ -54,9 +57,9 @@ public class TransactionServiceTest {
 		Float cryptoPesosArg = Float.parseFloat("140");
 		Intention intention = new Intention(cryptoSymbol,cryptoAmount,cryptoPrice,cryptoPesosArg,user,operation,date);
 		
-		when(intentionRepository.findById(1)).thenReturn(java.util.Optional.ofNullable(intention));
+		when(intentionService.findById(1)).thenReturn(intention);
 		
-		intentionService.saveTransaction(transactionDTO);
+		transactionService.saveTransaction(transactionDTO);
 		
 		verify(transactionRepository, atLeastOnce()).save(any());
 		
