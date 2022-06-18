@@ -1,6 +1,9 @@
 package ar.edu.unq.desapp.grupoi.backenddesappapl.model;
 
-public class CryptoCurrency {
+import java.io.Serializable;
+
+public class CryptoCurrency implements Serializable {
+	private static final long serialVersionUID = 6453824877650465212L;
 	private CryptoSymbol symbol;
 	private Float price;
 		
