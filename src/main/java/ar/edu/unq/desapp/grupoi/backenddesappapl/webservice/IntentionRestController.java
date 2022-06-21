@@ -19,21 +19,18 @@ import ar.edu.unq.desapp.grupoi.backenddesappapl.service.IntentionService;
 @RestController
 @RequestMapping("/intention")
 public class IntentionRestController {
-	
 	@Autowired
 	private IntentionService intentionService;
 	
-		@PostMapping(path = "/register")
-		public ResponseEntity<?> register(@Valid @RequestBody RegisterIntentionDTO intention) {
-			this.intentionService.saveIntention(intention);
-			return ResponseEntity.ok().body("The intention was registered");
-		}
-		
-		@GetMapping(path = "/getAll")
-		public ResponseEntity<List<IntentionDTO>> findAll() {
-			List<IntentionDTO> intentions = intentionService.findAll();
-			return ResponseEntity.ok().body(intentions);
-		}
-		
-
+	@PostMapping(path = "/register")
+	public ResponseEntity<?> register(@Valid @RequestBody RegisterIntentionDTO intention) {
+		this.intentionService.saveIntention(intention);
+		return ResponseEntity.ok().body("The intention was registered");
+	}
+	
+	@GetMapping(path = "/getAll")
+	public ResponseEntity<List<IntentionDTO>> findAll() {
+		List<IntentionDTO> intentions = intentionService.findAll();
+		return ResponseEntity.ok().body(intentions);
+	}
 }

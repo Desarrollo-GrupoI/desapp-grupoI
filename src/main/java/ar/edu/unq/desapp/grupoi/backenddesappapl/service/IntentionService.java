@@ -14,7 +14,8 @@ import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterIntentionDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.CryptoSymbol;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Intention;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Operation;
-import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.EntityNotFound;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.model.User;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.EntityNotFoundException;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.utils.DateService;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.utils.ValidCryptoSymbol;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.utils.ValidOperation;
@@ -22,21 +23,18 @@ import ar.edu.unq.desapp.grupoi.backenddesappapl.repositories.IntentionRepositor
 
 @Service
 public class IntentionService {
-	
 	@Autowired
 	private IntentionRepository intentionRepository;
-	
 	@Autowired
 	private DolarService dolarService;
-	
 	@Autowired
 	private UserService userService;
-	
 	@Autowired
 	private DateService dateService;
 	
 	@Transactional
 	public void saveIntention(RegisterIntentionDTO intentionDTO) {
+		User user = this.userService.findById(intentionDTO.getUserEmail());
 		CryptoSymbol cryptoSymbol = new ValidCryptoSymbol(intentionDTO.getCryptoSymbol()).getCryptoSymbol();
 		Operation operation = new ValidOperation(intentionDTO.getOperation()).getOperation();
 		Float dolarOficialSellValue = dolarService.getDolarOficialSellValue();
@@ -47,7 +45,7 @@ public class IntentionService {
 					intentionDTO.getCryptoAmount(),
 					intentionDTO.getPrice(),
 					intentionDTO.getPrice() * dolarOficialSellValue,
-					userService.findById(intentionDTO.getUserEmail()),
+					user,
 					operation,
 					this.dateService.getDate()
 					);
@@ -57,8 +55,9 @@ public class IntentionService {
 	
 	
 	public List<IntentionDTO> findAll() {
-		List<Intention> intentions = (List<Intention>)this.intentionRepository.findAll();
+		List<Intention> intentions = (List<Intention>) this.intentionRepository.findAll();
 		List<IntentionDTO> intentionsDTO = new ArrayList<IntentionDTO>();
+		
 		for(Intention intention : intentions) {
 			intentionsDTO.add(
 					new IntentionDTO(
@@ -69,11 +68,12 @@ public class IntentionService {
 							intention.getPesosArgAmount(),
 							intention.getUser().getName(),
 							intention.getUser().getSurname(),
-							"0",
-							"30"
+							intention.getUser().getOperations(),
+							intention.getUser().getReputation()
 							)
 					);
 		}
+		
 		return intentionsDTO;
 	}
 	
@@ -82,8 +82,11 @@ public class IntentionService {
 		try {
 			return this.intentionRepository.findById(intentionId).get();
 		} catch(NoSuchElementException e) {
-			throw new EntityNotFound("The intention was not found");
-		} 
+			throw new EntityNotFoundException("The intention was not found");
+		}
 	}
-
+	
+	public Boolean existsById(Integer intentionId) {
+		return this.intentionRepository.findById(intentionId).isPresent();
+	}
 }

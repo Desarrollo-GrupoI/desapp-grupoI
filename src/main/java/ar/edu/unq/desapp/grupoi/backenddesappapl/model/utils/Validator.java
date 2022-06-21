@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterUserDTO;
-import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.InvalidUserBody;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.InvalidArgumentsException;
 
 public class Validator {
 	
@@ -52,7 +52,7 @@ public class Validator {
 			errorMessages.addAll(messageError(user.getPassword(),"The password cannot be empty","Invalid password"));
 
 		if(!errorMessages.isEmpty())
-			throw new InvalidUserBody(errorMessageBase + String.join("", errorMessages));
+			throw new InvalidArgumentsException(errorMessageBase + String.join("", errorMessages));
 	}
 	
 	

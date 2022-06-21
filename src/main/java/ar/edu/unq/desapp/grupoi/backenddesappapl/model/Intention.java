@@ -23,7 +23,7 @@ public class Intention {
 	private Float price;
 	private Float pesosArgAmount;
 	@OneToOne
-	@JoinColumn(name="user_email")
+	@JoinColumn(name = "user_email")
 	private User user;
 	@Enumerated(EnumType.STRING)
 	private Operation operation;
@@ -31,7 +31,7 @@ public class Intention {
 	
 	public Intention() {}
 	
-	public Intention(CryptoSymbol cryptoSymbol,Float cryptoAmount, Float price, Float pesosArgAmount, User user, Operation operation, LocalDateTime date) {
+	public Intention(CryptoSymbol cryptoSymbol, Float cryptoAmount, Float price, Float pesosArgAmount, User user, Operation operation, LocalDateTime date) {
 		this.cryptoSymbol = cryptoSymbol;
 		this.cryptoAmount = cryptoAmount;
 		this.price = price;

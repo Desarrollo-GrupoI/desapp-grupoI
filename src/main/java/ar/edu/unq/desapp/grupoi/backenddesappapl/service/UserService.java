@@ -10,7 +10,7 @@ import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterUserDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.UserDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Cvu;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.User;
-import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.EntityNotFound;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.EntityNotFoundException;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.repositories.CvuRepository;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.repositories.UserRepository;
 
@@ -54,11 +54,23 @@ public class UserService {
 		try {
 			return this.userRepository.findById(email).get();
 		} catch(NoSuchElementException e) {
-			throw new EntityNotFound("The user was not found");
+			throw new EntityNotFoundException("The user was not found");
 		}
 	}  
 	
 	public void deleteById(String email) {
 		this.userRepository.deleteById(email);
+	}
+	
+	public void addOperation(String userEmailA, String userEmailB, Integer points) {
+		this.userRepository.addOperation(userEmailA, userEmailB, points);
+	}
+	
+	public void updateUserReputation(String userEmail, String reputationPointsOperation) {
+		this.userRepository.updateUserReputationPoints(userEmail, reputationPointsOperation);
+	}
+	
+	public boolean existsById(String email) {
+		return this.userRepository.findById(email).isPresent();
 	}
 }

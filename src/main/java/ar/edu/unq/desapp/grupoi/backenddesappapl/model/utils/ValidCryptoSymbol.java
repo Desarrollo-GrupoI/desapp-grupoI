@@ -1,7 +1,7 @@
 package ar.edu.unq.desapp.grupoi.backenddesappapl.model.utils;
 
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.CryptoSymbol;
-import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.CryptoSymbolNotFound;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.EntityNotFoundException;
 
 public class ValidCryptoSymbol {
 	private CryptoSymbol cryptoSymbol;
@@ -10,7 +10,7 @@ public class ValidCryptoSymbol {
 		try {
 			this.cryptoSymbol = CryptoSymbol.valueOf(cryptoSymbol.toUpperCase());
 		} catch(IllegalArgumentException exception) {
-			throw new CryptoSymbolNotFound("The crypto symbol '" + cryptoSymbol + "' was not found");
+			throw new EntityNotFoundException("The crypto symbol '" + cryptoSymbol + "' was not found");
 		}
 	}
 

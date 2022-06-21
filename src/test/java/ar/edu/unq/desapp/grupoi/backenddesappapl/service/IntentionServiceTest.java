@@ -21,7 +21,7 @@ import ar.edu.unq.desapp.grupoi.backenddesappapl.model.CryptoSymbol;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Intention;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Operation;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.User;
-import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.EntityNotFound;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.EntityNotFoundException;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.utils.DateService;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.utils.ValidCryptoSymbol;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.utils.ValidOperation;
@@ -111,7 +111,7 @@ public class IntentionServiceTest {
 	
 	@Test
 	public void findIntentionById() {
-		EntityNotFound exception = Assertions.assertThrows(EntityNotFound.class, () -> {
+		EntityNotFoundException exception = Assertions.assertThrows(EntityNotFoundException.class, () -> {
    		 intentionService.findById(32);
    	 });
    	 

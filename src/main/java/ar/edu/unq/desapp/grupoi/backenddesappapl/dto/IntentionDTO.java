@@ -11,11 +11,11 @@ public class IntentionDTO {
 	private Float pesosArgPrice;
 	private String name;
 	private String surname;
-	private String operationsUser;
-	private String reputationUser;
+	private Integer operations;
+	private String reputation;
 		
 	public IntentionDTO(LocalDateTime date, CryptoSymbol cryptoSymbol, Float cryptoAmount, Float price,
-		Float pesosArgPrice, String name, String surname, String operationsUser, String reputationUser) {
+		Float pesosArgPrice, String name, String surname, Integer operations, String reputation) {
 		this.date = date;
 		this.cryptoSymbol = cryptoSymbol;
 		this.cryptoAmount = cryptoAmount;
@@ -23,8 +23,8 @@ public class IntentionDTO {
 		this.pesosArgPrice = pesosArgPrice;
 		this.name = name;
 		this.surname = surname;
-		this.operationsUser = operationsUser;
-		this.reputationUser = reputationUser;
+		this.operations = operations;
+		this.reputation = reputation;
 	}
 	
 	public LocalDateTime getDate() {
@@ -82,18 +82,18 @@ public class IntentionDTO {
 		this.surname = surname;
 	}
 	
-	public String getOperationsUser() {
-		return operationsUser;
+	public Integer getOperations() {
+		return operations;
 	}
 	
-	public void setOperationsUser(String operationsUser) {
-		this.operationsUser = operationsUser;
+	public void setOperations(Integer operations) {
+		this.operations = operations;
 	}
-	public String getReputationUser() {
-		return reputationUser;
+	public String getReputation() {
+		return reputation;
 	}
 	
-	public void setReputationUser(String reputationUser) {
-		this.reputationUser = reputationUser;
+	public void setReputation(String reputation) {
+		this.reputation = reputation;
 	}
 }

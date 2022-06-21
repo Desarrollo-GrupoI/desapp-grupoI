@@ -1,10 +1,10 @@
 package ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions;
 
-public class EntityNotFound extends RuntimeException {
+public class InvalidArgumentsException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 	private String message;
 
-	public EntityNotFound(String message) {
+	public InvalidArgumentsException(String message) {
 		this.message = message;
 	}
 

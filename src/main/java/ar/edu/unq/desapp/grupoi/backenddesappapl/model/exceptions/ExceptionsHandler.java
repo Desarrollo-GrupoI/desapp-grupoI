@@ -13,18 +13,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class ExceptionsHandler {
 	
-	@ExceptionHandler(value = InvalidUserBody.class)
-	public ResponseEntity<Object> exception(InvalidUserBody exception) {
+	@ExceptionHandler(value = InvalidArgumentsException.class)
+	public ResponseEntity<Object> exception(InvalidArgumentsException exception) {
 		return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 	
-	@ExceptionHandler(value = EntityNotFound.class)
-	public ResponseEntity<Object> exception(EntityNotFound exception) {
-		return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
-	}
-	
-	@ExceptionHandler(value = CryptoSymbolNotFound.class)
-	public ResponseEntity<Object> exception(CryptoSymbolNotFound exception) {
+	@ExceptionHandler(value = EntityNotFoundException.class)
+	public ResponseEntity<Object> exception(EntityNotFoundException exception) {
 		return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 	

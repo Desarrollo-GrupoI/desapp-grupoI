@@ -17,7 +17,6 @@ public class RegisterIntentionDTO {
 	private String price;
 	
 	@NotBlank(message = "The intention must have an e-mail")
-    @Pattern(regexp = "^[a-zA-Z]+[a-zA-Z._-]*@[a-zA-Z]+\\.[a-zA-Z^s]+$", message = "Must be a valid email")
 	private String userEmail;
 	
 	@NotBlank(message = "The intention must have an operation")

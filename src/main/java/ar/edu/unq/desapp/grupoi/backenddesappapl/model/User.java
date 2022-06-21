@@ -24,6 +24,8 @@ public class User {
 	private String cvu;
 	@Column(length = 8)
 	private String walletAddress;
+	private Integer operations;
+	private Integer reputationPoints;
 
 	public User() {}
 	
@@ -33,12 +35,17 @@ public class User {
 		this.email = email;
 		this.address = address;
 		this.password = password;
+		this.operations = 0;
+		this.reputationPoints = 0;
 	}
 
-	public User(String name, String surname, String email, String address, String password, String cvu, String walletAddress) {
+	public User(String name, String surname, String email, String address, String password, String cvu, String walletAddress, Integer operations, Integer reputationPoints) {
 		this(name, surname, email, address, password);
+		
 		this.cvu = cvu;
 		this.walletAddress = walletAddress;
+		this.operations = operations;
+		this.reputationPoints = reputationPoints;
 	}
 	
 	public String getName() {
@@ -95,6 +102,26 @@ public class User {
 
 	public void setWalletAddress(String walletAddress) {
 		this.walletAddress = walletAddress;
+	}
+
+	public Integer getOperations() {
+		return operations;
+	}
+
+	public void setOperations(Integer operations) {
+		this.operations = operations;
+	}
+
+	public Integer getReputationPoints() {
+		return reputationPoints;
+	}
+
+	public void setReputationPoints(Integer reputationPoints) {
+		this.reputationPoints = reputationPoints;
+	}
+	
+	public String getReputation() {
+		return this.operations == 0 ? "Sin operaciones" : String.valueOf(this.reputationPoints / this.operations);
 	}
 	
 	public void initializeCvu(Integer cvuNumber) {

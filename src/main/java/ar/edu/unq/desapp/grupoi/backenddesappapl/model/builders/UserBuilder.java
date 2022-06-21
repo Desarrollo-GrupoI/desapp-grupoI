@@ -10,13 +10,15 @@ public class UserBuilder {
 	private String password = "noPassword";
 	private String cvu = "0000000000000000000000";
 	private String walletAddress = "noWalletAddress";
+	private Integer operations = 0;
+	private Integer reputationPoints = 0;
 	
 	public static UserBuilder aUser() {
 		return new UserBuilder();
 	}
 	
 	public User build() {
-		return new User(this.name, this.surname, this.email, this.address, this.password, this.cvu, this.walletAddress);
+		return new User(this.name, this.surname, this.email, this.address, this.password, this.cvu, this.walletAddress, this.operations, this.reputationPoints);
 	}
 	
 	public UserBuilder withName(String name) {
@@ -51,6 +53,16 @@ public class UserBuilder {
 	
 	public UserBuilder withWalletAddress(String walletAddress) {
 		this.walletAddress = walletAddress;
+		return this;
+	}
+	
+	public UserBuilder withOperations(Integer operations) {
+		this.operations = operations;
+		return this;
+	}
+	
+	public UserBuilder withReputationPoints(Integer reputationPoints) {
+		this.reputationPoints = reputationPoints;
 		return this;
 	}
 }

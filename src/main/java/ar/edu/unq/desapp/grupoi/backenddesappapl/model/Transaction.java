@@ -28,6 +28,9 @@ public class Transaction {
 	@OneToOne
     @JoinColumn(name = "user_email", referencedColumnName = "email")
 	private User user;
+	@OneToOne
+    @JoinColumn(name = "intention_id", referencedColumnName = "id")
+	private Intention intention;
 	private String sendAddress;
 	@Enumerated(EnumType.STRING)
 	private TransactionState state;

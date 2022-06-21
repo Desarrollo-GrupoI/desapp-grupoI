@@ -1,7 +1,7 @@
 package ar.edu.unq.desapp.grupoi.backenddesappapl.model.utils;
 
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Operation;
-import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.CryptoSymbolNotFound;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.EntityNotFoundException;
 
 public class ValidOperation {
 	private Operation operation;
@@ -10,7 +10,7 @@ public class ValidOperation {
 		try {
 			this.operation = Operation.valueOf(operation.toUpperCase());
 		} catch(IllegalArgumentException exception) {
-			throw new CryptoSymbolNotFound("The operation '" + operation + "' was not found");
+			throw new EntityNotFoundException("The operation '" + operation + "' was not found");
 		}
 	}
 
