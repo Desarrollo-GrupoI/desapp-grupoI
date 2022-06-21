@@ -19,6 +19,7 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@OneToOne
+	@JoinColumn(name = "intention_id", referencedColumnName = "id")
 	private Intention transactionIntention;
 	@Enumerated(EnumType.STRING)
 	private CryptoSymbol cryptoSymbol;
@@ -28,9 +29,6 @@ public class Transaction {
 	@OneToOne
     @JoinColumn(name = "user_email", referencedColumnName = "email")
 	private User user;
-	@OneToOne
-    @JoinColumn(name = "intention_id", referencedColumnName = "id")
-	private Intention intention;
 	private String sendAddress;
 	@Enumerated(EnumType.STRING)
 	private TransactionState state;

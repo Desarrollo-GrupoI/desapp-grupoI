@@ -34,7 +34,7 @@ public class UserServiceTest {
     public void saveUser() {
 		RegisterUserDTO userDTO =  new RegisterUserDTO("nameTest","surnameTest","test@gmail.com","addressTest","123Test#");
 		
-		User user = new User(userDTO.getName(), userDTO.getSurname(), userDTO.getEmail(), userDTO.getAddress(), userDTO.getPassword(), "0000000000000000000001", "00000001");
+		User user = new User(userDTO.getName(), userDTO.getSurname(), userDTO.getEmail(), userDTO.getAddress(), userDTO.getPassword());
 		Cvu cvu = new Cvu();
 		cvu.setNumber(new Integer(1));
 		

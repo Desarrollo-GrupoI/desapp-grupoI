@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.IntentionDTO;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.IntentionOperationDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterIntentionDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.CryptoSymbol;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Intention;
@@ -84,6 +85,27 @@ public class IntentionService {
 		} catch(NoSuchElementException e) {
 			throw new EntityNotFoundException("The intention was not found");
 		}
+	}
+	
+	public List<IntentionOperationDTO> findAllByOperation(Operation operation) {
+		List<Intention> intentions = (List<Intention>) this.intentionRepository.findAllByOperation(operation);
+		List<IntentionOperationDTO> intentionsDTO = new ArrayList<IntentionOperationDTO>();
+		for(Intention intention : intentions) {
+			intentionsDTO.add(
+					new IntentionOperationDTO(
+							intention.getDate(), 
+							intention.getCryptoSymbol(), 
+							intention.getCryptoAmount(),
+							intention.getPrice(),
+							intention.getPesosArgAmount(),
+							intention.getUser().getName(),
+							intention.getUser().getSurname(),
+							intention.getOperation()
+							)
+					);
+		}
+		
+		return intentionsDTO;
 	}
 	
 	public Boolean existsById(Integer intentionId) {

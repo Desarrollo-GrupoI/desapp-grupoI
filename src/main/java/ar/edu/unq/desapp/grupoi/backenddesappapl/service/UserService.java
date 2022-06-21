@@ -44,7 +44,7 @@ public class UserService {
 		List<User> users =  (List<User>) this.userRepository.findAll();
 		List<UserDTO> usersDTO = new ArrayList<UserDTO>();
 		for(User user: users) {
-			usersDTO.add(new UserDTO(user.getName(), user.getSurname(), 0, ""));
+			usersDTO.add(new UserDTO(user.getName(), user.getSurname(), user.getOperations(), user.getReputation()));
 		};
 		
 		return usersDTO;
