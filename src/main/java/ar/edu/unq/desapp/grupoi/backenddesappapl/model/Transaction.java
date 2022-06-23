@@ -34,6 +34,8 @@ public class Transaction {
 	private TransactionState state;
 	private LocalDateTime date = LocalDateTime.now();
 	
+	public Transaction() {}
+	
 	public Transaction(Intention transactionIntention, User user, TransactionState state) {
 		this.transactionIntention = transactionIntention;
 		this.cryptoSymbol = transactionIntention.getCryptoSymbol();

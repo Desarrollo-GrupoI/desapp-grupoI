@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterTransactionActionDTO;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.TransactionActionDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterTransactionDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.service.TransactionService;
 
@@ -25,13 +25,13 @@ public class TransactionRestController {
 	} 
 	
 	@PostMapping(path = "/accept")
-	public ResponseEntity<?> accept(@Valid @RequestBody RegisterTransactionActionDTO transaction) {
+	public ResponseEntity<?> accept(@Valid @RequestBody TransactionActionDTO transaction) {
 		this.transactionService.acceptTransaction(transaction);
 		return ResponseEntity.ok().body("The transaction was accepted");
 	}
 	
 	@PostMapping(path = "/cancel")
-	public ResponseEntity<?> cancel(@Valid @RequestBody RegisterTransactionActionDTO transaction) {
+	public ResponseEntity<?> cancel(@Valid @RequestBody TransactionActionDTO transaction) {
 		this.transactionService.cancelTransaction(transaction);
 		return ResponseEntity.ok().body("The transaction was canceled");
 	}

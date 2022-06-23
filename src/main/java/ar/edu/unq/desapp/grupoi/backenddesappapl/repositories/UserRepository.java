@@ -11,10 +11,15 @@ import ar.edu.unq.desapp.grupoi.backenddesappapl.model.User;
 @Repository
 public interface UserRepository extends CrudRepository<User, String> {
 	
-	//
-	@Query(nativeQuery=true, value = "UPDATE User SET operations = operations + 1, reputation_points = reputation_points + ?3 WHERE email = '?1' OR email = '?2'" )
-	void addOperation(String userEmailA, String userEmailB, Integer points);
+	@Modifying
+	@Query(nativeQuery=true, value = "UPDATE User SET operations = operations + 1 WHERE email = ?1 OR email = ?2 " )
+	void addOperation(String userEmailA, String userEmailB);
 	
-	@Query(nativeQuery=true, value = "UPDATE User SET reputation_points = reputation_points ?2 WHERE email = '?1'")
-	void updateUserReputationPoints(String userEmail, String reputationPointsOperation);
+	@Modifying
+	@Query(nativeQuery=true, value = "UPDATE User SET reputation_points = reputation_points + ?3 WHERE email = ?1 OR email = ?2 " )
+	void addReputationPoints(String userEmail,String userEmailB, Integer reputationPointsOperation);
+	
+	@Modifying
+	@Query(nativeQuery=true, value = "UPDATE User SET reputation_points = reputation_points - 20 WHERE email = ?1 " )
+	void removeReputationPoints(String userEmail);
 }

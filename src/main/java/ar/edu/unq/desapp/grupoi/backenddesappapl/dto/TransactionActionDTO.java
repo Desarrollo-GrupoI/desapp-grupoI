@@ -3,26 +3,15 @@ package ar.edu.unq.desapp.grupoi.backenddesappapl.dto;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-public class RegisterTransactionActionDTO {
-	@NotNull(message = "The transaction must have a intention ID")
-	private Integer intentionId;
+public class TransactionActionDTO {
 	@NotNull(message = "The transaction action must have a transaction ID")
 	private Integer transactionId;
 	@NotBlank(message = "The transaction action must have a user email")
 	private String userEmail;
 	 
-	public RegisterTransactionActionDTO(Integer intentionId, Integer transactionId, String userEmail) {
-		this.intentionId = intentionId;
+	public TransactionActionDTO(Integer transactionId, String userEmail) {
 		this.transactionId = transactionId;
 		this.userEmail = userEmail;
-	}
-	
-	public Integer getIntentionId() {
-		return intentionId;
-	}
-	
-	public void setIntentionId(Integer intentionId) {
-		this.intentionId = intentionId;
 	}
 	
 	public Integer getTransactionId() {
@@ -43,6 +32,6 @@ public class RegisterTransactionActionDTO {
 	
 	@Override
 	public String toString() {
-		return "{\"intentionId\": \"" + this.intentionId + "\", \"transactionId\": \"" + this.transactionId + "\", \"userEmail\": \"" + this.userEmail + "\"}";
+		return "{\"transactionId\": \"" + this.transactionId + "\", \"userEmail\": \"" + this.userEmail + "\"}";
 	}
 }
