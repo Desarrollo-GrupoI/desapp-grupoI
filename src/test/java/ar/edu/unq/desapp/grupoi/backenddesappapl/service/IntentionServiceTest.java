@@ -16,6 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.IntentionDTO;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.IntentionOperationDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterIntentionDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.CryptoSymbol;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Intention;
@@ -80,7 +81,7 @@ public class IntentionServiceTest {
         Assertions.assertEquals(intention.getCryptoSymbol().name(), intentionDTO.getCryptoSymbol());
         verify(intentionRepository, atLeastOnce()).save(any());
     }
-	
+	 
 	
 	@Test
 	public void findAllIntentions() {
@@ -117,6 +118,40 @@ public class IntentionServiceTest {
    	 
    	 Assertions.assertEquals("The intention was not found", exception.getMessage());
    }
+	
+	
+	@Test
+	public void findAllByOperation() {
+		CryptoSymbol cryptoSymbol1 = new ValidCryptoSymbol("MATICUSDT").getCryptoSymbol();
+		Operation operationBuy = new ValidOperation("BUY").getOperation();
+		Operation operationSell = new ValidOperation("SELL").getOperation();
+		User user = new User("nameTest","surnameTest","test@gmail.com","addressTest","123Test#");
+		LocalDateTime date = LocalDateTime.now();
+		Float cryptoAmount = Float.parseFloat("2");
+		Float cryptoPrice = Float.parseFloat("10");
+		Float cryptoPesosArg = Float.parseFloat("140");
+		
+		Intention intention1 = new Intention(cryptoSymbol1,cryptoAmount,cryptoPrice,cryptoPesosArg,user,operationBuy,date);
+		Intention intention2 = new Intention(cryptoSymbol1,cryptoAmount,cryptoPrice,cryptoPesosArg,user,operationBuy,date);
+		Intention intention3 = new Intention(cryptoSymbol1,cryptoAmount,cryptoPrice,cryptoPesosArg,user,operationSell,date);
+		
+		List<Intention> intentionsBuy = new ArrayList<Intention>();
+		intentionsBuy.add(intention1);
+		intentionsBuy.add(intention2);
+		
+		List<Intention> intentionsSell = new ArrayList<Intention>();
+		intentionsSell.add(intention3);
+		
+		when(intentionRepository.findAllByOperation(operationBuy)).thenReturn(intentionsBuy);
+		when(intentionRepository.findAllByOperation(operationSell)).thenReturn(intentionsSell);
+		
+		List<IntentionOperationDTO> intentionsBuyDTO = intentionService.findAllByOperation("BUY");
+		List<IntentionOperationDTO> intentionsSellDTO = intentionService.findAllByOperation("SELL");
+		Assertions.assertEquals(2, intentionsBuyDTO.size());
+		Assertions.assertEquals(1, intentionsSellDTO.size());
+		
+		verify(intentionRepository, atLeastOnce()).findAllByOperation(operationBuy);
+	}
 	
 	
 }

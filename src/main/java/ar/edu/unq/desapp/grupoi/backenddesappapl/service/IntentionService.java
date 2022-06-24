@@ -66,6 +66,7 @@ public class IntentionService {
 							intention.getCryptoAmount(),
 							intention.getPrice(),
 							intention.getPesosArgAmount(),
+							intention.getOperation(),
 							intention.getUser().getName(),
 							intention.getUser().getSurname(),
 							intention.getUser().getOperations(),

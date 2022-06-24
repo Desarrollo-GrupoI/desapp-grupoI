@@ -43,7 +43,7 @@ public class TransactionService {
 		Transaction transaction = new Transaction(intention, user, TransactionState.PENDING);
 
 		this.transactionRepository.save(transaction);
-	}
+	} 
 
 	@Transactional
 	public void acceptTransaction(TransactionActionDTO transactionDTO) throws SystemException {
@@ -77,7 +77,7 @@ public class TransactionService {
 			}
 		} else
 			throw new InvalidArgumentsException("The transaction has already been accepted or canceled");
-	}
+	} 
 
 	@Transactional
 	public void cancelTransaction(TransactionActionDTO transactionDTO) {

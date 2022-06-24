@@ -2,6 +2,7 @@ package ar.edu.unq.desapp.grupoi.backenddesappapl.dto;
 
 import java.time.LocalDateTime;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.CryptoSymbol;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Operation;
 
 public class IntentionDTO {
 	private LocalDateTime date;
@@ -9,24 +10,34 @@ public class IntentionDTO {
 	private Float cryptoAmount;
 	private Float price;
 	private Float pesosArgPrice;
+	private Operation operation;
 	private String name;
 	private String surname;
 	private Integer operations;
 	private String reputation;
 		
 	public IntentionDTO(LocalDateTime date, CryptoSymbol cryptoSymbol, Float cryptoAmount, Float price,
-		Float pesosArgPrice, String name, String surname, Integer operations, String reputation) {
+		Float pesosArgPrice, Operation operation,String name, String surname, Integer operations, String reputation) {
 		this.date = date;
 		this.cryptoSymbol = cryptoSymbol;
 		this.cryptoAmount = cryptoAmount;
 		this.price = price;
 		this.pesosArgPrice = pesosArgPrice;
+		this.operation = operation;
 		this.name = name;
 		this.surname = surname;
 		this.operations = operations;
 		this.reputation = reputation;
 	}
 	
+	public Operation getOperation() {
+		return operation;
+	}
+
+	public void setOperation(Operation operation) {
+		this.operation = operation;
+	}
+
 	public LocalDateTime getDate() {
 		return date;
 	}

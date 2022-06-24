@@ -6,16 +6,19 @@ import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterTransactionDTO;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.TransactionActionDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.CryptoSymbol;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Intention;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Operation;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.User;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.SystemException;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.utils.ValidCryptoSymbol;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.utils.ValidOperation;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.repositories.IntentionRepository;
@@ -48,7 +51,7 @@ public class TransactionServiceTest {
 	@Test
     public void saveTransaction() {
 		RegisterTransactionDTO transactionDTO = new RegisterTransactionDTO(1,"test@gmail.com");
-		User user = new User("nameTest","surnameTest","test@gmail.com","addressTest","123Test#");
+		User user = new User("nameTest","surnameTest","user@gmail.com","addressTest","123Test#");
 		CryptoSymbol cryptoSymbol = new ValidCryptoSymbol("MATICUSDT").getCryptoSymbol();
 		Operation operation = new ValidOperation("BUY").getOperation();
 		LocalDateTime date = LocalDateTime.now();
@@ -64,5 +67,6 @@ public class TransactionServiceTest {
 		verify(transactionRepository, atLeastOnce()).save(any());
 		
 	}
+	
 
 }
