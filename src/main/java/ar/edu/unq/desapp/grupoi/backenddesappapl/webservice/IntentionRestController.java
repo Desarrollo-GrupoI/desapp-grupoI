@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.IntentionDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.IntentionOperationDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterIntentionDTO;
-import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Intention;
-import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Operation;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.service.IntentionService;
 
 @RestController
@@ -39,7 +37,7 @@ public class IntentionRestController {
 	}
 	
 	@GetMapping(path = "/get/{operation}")
-	public ResponseEntity<List<IntentionOperationDTO>> findAllByOperation(@PathVariable Operation operation) {
+	public ResponseEntity<List<IntentionOperationDTO>> findAllByOperation(@PathVariable String operation) {
 		List<IntentionOperationDTO> intentions = intentionService.findAllByOperation(operation);
 		return ResponseEntity.ok().body(intentions);
 	}

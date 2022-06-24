@@ -66,17 +66,21 @@ public class UserService {
 		this.userRepository.addOperation(userEmailA, userEmailB);
 	}
 	
-	public void updateUserReputation(String userEmailA, String userEmailB ,Integer reputationPointsOperation) {
-		this.userRepository.addReputationPoints(userEmailA, userEmailB, reputationPointsOperation);
+	public void updateReputationPoints(String userEmail, Integer reputationPointsOperation, Boolean isAdd) {
+		if(isAdd)
+			this.userRepository.addReputationPoints(userEmail, reputationPointsOperation);
+		else
+			this.userRepository.removeReputationPoints(userEmail, reputationPointsOperation);
 	}
 	
-	public void removeReputation(String userEmail) {
-		this.userRepository.removeReputationPoints(userEmail);
+	public void updateReputationPoints(String userEmailA, String userEmailB, Integer reputationPointsOperation, Boolean isAdd) {
+		if(isAdd)
+			this.userRepository.addReputationPoints(userEmailA, userEmailB, reputationPointsOperation);
+		else
+			this.userRepository.removeReputationPoints(userEmailA, userEmailB, reputationPointsOperation);
 	}
 	
 	public boolean existsById(String email) {
 		return this.userRepository.findById(email).isPresent();
 	}
-	
-	
 }

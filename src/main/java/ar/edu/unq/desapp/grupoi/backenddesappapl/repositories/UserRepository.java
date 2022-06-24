@@ -12,14 +12,22 @@ import ar.edu.unq.desapp.grupoi.backenddesappapl.model.User;
 public interface UserRepository extends CrudRepository<User, String> {
 	
 	@Modifying
-	@Query(nativeQuery=true, value = "UPDATE User SET operations = operations + 1 WHERE email = ?1 OR email = ?2 " )
-	void addOperation(String userEmailA, String userEmailB);
+	@Query(nativeQuery = true, value = "UPDATE User SET operations = operations + 1 WHERE email = ?1 OR email = ?2")
+	void addOperation(String emailA, String emailB);
 	
 	@Modifying
-	@Query(nativeQuery=true, value = "UPDATE User SET reputation_points = reputation_points + ?3 WHERE email = ?1 OR email = ?2 " )
-	void addReputationPoints(String userEmail,String userEmailB, Integer reputationPointsOperation);
+	@Query(nativeQuery = true, value = "UPDATE User SET reputation_points = reputation_points + ?2 WHERE email = ?1")
+	void addReputationPoints(String email, Integer reputationPointsOperation);
 	
 	@Modifying
-	@Query(nativeQuery=true, value = "UPDATE User SET reputation_points = reputation_points - 20 WHERE email = ?1 " )
-	void removeReputationPoints(String userEmail);
+	@Query(nativeQuery = true, value = "UPDATE User SET reputation_points = reputation_points + ?3 WHERE email = ?1 OR email = ?2")
+	void addReputationPoints(String emailA, String emailB, Integer reputationPointsOperation);
+
+	@Modifying
+	@Query(nativeQuery = true, value = "UPDATE User SET reputation_points = reputation_points - ?2 WHERE email = ?1")
+	void removeReputationPoints(String email, Integer reputationPointsOperation);
+	
+	@Modifying
+	@Query(nativeQuery = true, value = "UPDATE User SET reputation_points = reputation_points - ?3 WHERE email = ?1 OR email = ?2")
+	void removeReputationPoints(String emailA, String emailB, Integer reputationPointsOperation);
 }

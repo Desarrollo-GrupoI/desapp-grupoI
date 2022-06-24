@@ -1,13 +1,8 @@
 package ar.edu.unq.desapp.grupoi.backenddesappapl.service;
 
 import java.time.Duration;
-import java.time.Period;
 import java.util.NoSuchElementException;
-import java.util.Optional;
-
 import javax.transaction.Transactional;
-import javax.validation.Valid;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +15,7 @@ import ar.edu.unq.desapp.grupoi.backenddesappapl.model.TransactionState;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.User;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.EntityNotFoundException;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.InvalidArgumentsException;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.SystemException;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.utils.DateService;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.repositories.TransactionRepository;
 
@@ -27,6 +23,8 @@ import ar.edu.unq.desapp.grupoi.backenddesappapl.repositories.TransactionReposit
 public class TransactionService {
 	@Autowired
 	private DateService dateService;
+	@Autowired
+	private CryptoCurrencyService cryptoCurrencyService;
 	@Autowired
 	private IntentionService intentionService;
 	@Autowired
@@ -48,14 +46,10 @@ public class TransactionService {
 	}
 
 	@Transactional
-	public void acceptTransaction(TransactionActionDTO transactionDTO) {
-		
-		if(!this.userService.existsById(transactionDTO.getUserEmail()))
-			throw new EntityNotFoundException("The user was not found");
-		
+	public void acceptTransaction(TransactionActionDTO transactionDTO) throws SystemException {
 		Transaction transaction = this.findById(transactionDTO.getTransactionId());	
-		if (transaction.getState() == TransactionState.PENDING) {
-			Intention intention = this.intentionService.findById(transaction.getTransactionIntention().getId());
+		if(transaction.getState() == TransactionState.PENDING) {
+			Intention intention = transaction.getTransactionIntention();
 			
 			User userTransaction = userService.findById(transaction.getUser().getEmail());
 			User userIntention = userService.findById(intention.getUser().getEmail());
@@ -63,39 +57,42 @@ public class TransactionService {
 			if(!StringUtils.equals(transactionDTO.getUserEmail(), userIntention.getEmail()))
 				throw new InvalidArgumentsException("You cannot accept this transaction");
 			
-			//chequear cancelacion de precio para cancelar por sistema
-			int points = Duration.between(transaction.getDate(), dateService.getDate()).toMinutes() <= 30 ? 10 : 5;
-			this.userService.addOperation(userIntention.getEmail(), userTransaction.getEmail());
-			this.userService.updateUserReputation(userTransaction.getEmail(),userIntention.getEmail(), (Integer)points);
-			
-			transaction.setState(TransactionState.DONE);
-			this.transactionRepository.save(transaction);	
-		}
-		else {
-			throw new EntityNotFoundException("The transaction has already been accepted or canceled");
-		}
-		
+			Float cryptoPrice = this.cryptoCurrencyService.getCryptoBySymbol(intention.getCryptoSymbol().toString()).getPrice();
+			if(cryptoPrice * 0.95 > intention.getPrice() || intention.getPrice() > cryptoPrice * 1.05) {
+				transaction.setState(TransactionState.CANCELED);
+				
+				this.transactionRepository.save(transaction);
+				
+				throw new SystemException("The price is not in +/- 5 % range");
+			} else {
+				transaction.setState(TransactionState.DONE);
+				
+				int points = Duration.between(transaction.getDate(), dateService.getDate()).toMinutes() <= 30 ? 10 : 5;
+				
+				this.userService.addOperation(userIntention.getEmail(), userTransaction.getEmail());
+				this.userService.updateReputationPoints(userTransaction.getEmail(), userIntention.getEmail(), points, true);
+				
+				this.transactionRepository.save(transaction);
+				this.transactionRepository.cancelAllOthersTransactions(transactionDTO.getTransactionId(), intention.getId());
+			}
+		} else
+			throw new InvalidArgumentsException("The transaction has already been accepted or canceled");
 	}
 
 	@Transactional
 	public void cancelTransaction(TransactionActionDTO transactionDTO) {
-		
 		if(!this.userService.existsById(transactionDTO.getUserEmail()))
 			throw new EntityNotFoundException("The user was not found");
 		
 		Transaction transaction = this.findById(transactionDTO.getTransactionId());	
 		
-		if (transaction.getState() == TransactionState.PENDING) {
-			User userCancelTransaction = userService.findById(transactionDTO.getUserEmail());
-			
-			this.userService.removeReputation(userCancelTransaction.getEmail());
+		if(transaction.getState() == TransactionState.PENDING) {			
 			transaction.setState(TransactionState.CANCELED);
-			this.transactionRepository.save(transaction);	
-		}
-		else {
-			throw new EntityNotFoundException("The transaction has already been accepted or canceled");
-		}
-		
+			
+			this.transactionRepository.save(transaction);
+			this.userService.updateReputationPoints(transactionDTO.getUserEmail(), 20, false);
+		} else
+			throw new InvalidArgumentsException("The transaction has already been accepted or canceled");
 	}
 	
 	public Transaction findById(Integer transactionId) {

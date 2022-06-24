@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.TransactionActionDTO;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.SystemException;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterTransactionDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.service.TransactionService;
 
@@ -26,7 +27,11 @@ public class TransactionRestController {
 	
 	@PostMapping(path = "/accept")
 	public ResponseEntity<?> accept(@Valid @RequestBody TransactionActionDTO transaction) {
-		this.transactionService.acceptTransaction(transaction);
+		try {
+			this.transactionService.acceptTransaction(transaction);
+		} catch(SystemException e) {
+			return ResponseEntity.ok().body(e.getMessage());
+		}
 		return ResponseEntity.ok().body("The transaction was accepted");
 	}
 	

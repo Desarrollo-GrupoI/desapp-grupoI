@@ -54,7 +54,6 @@ public class IntentionService {
 		this.intentionRepository.save(intention);
 	} 
 	
-	
 	public List<IntentionDTO> findAll() {
 		List<Intention> intentions = (List<Intention>) this.intentionRepository.findAll();
 		List<IntentionDTO> intentionsDTO = new ArrayList<IntentionDTO>();
@@ -78,7 +77,6 @@ public class IntentionService {
 		return intentionsDTO;
 	}
 	
-	
 	public Intention findById(Integer intentionId) {
 		try {
 			return this.intentionRepository.findById(intentionId).get();
@@ -87,7 +85,8 @@ public class IntentionService {
 		}
 	}
 	
-	public List<IntentionOperationDTO> findAllByOperation(Operation operation) {
+	public List<IntentionOperationDTO> findAllByOperation(String operationName) {
+		Operation operation = new ValidOperation(operationName).getOperation();
 		List<Intention> intentions = (List<Intention>) this.intentionRepository.findAllByOperation(operation);
 		List<IntentionOperationDTO> intentionsDTO = new ArrayList<IntentionOperationDTO>();
 		for(Intention intention : intentions) {
