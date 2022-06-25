@@ -1,16 +1,29 @@
 package ar.edu.unq.desapp.grupoi.backenddesappapl.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import javax.transaction.Transactional;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.CryptoActiveDTO;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.DatePeriodDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterUserDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.UserDTO;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.UserVolumeDTO;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.model.CryptoSymbol;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Cvu;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Operation;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Transaction;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.User;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.EntityNotFoundException;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.model.utils.ValidDate;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.repositories.CvuRepository;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.repositories.UserRepository;
 
@@ -20,6 +33,12 @@ public class UserService {
 	private CvuRepository cvuRepository;
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private TransactionService transactionService;
+	@Autowired
+	private DollarService dollarService;
+	@Autowired
+	private CryptoCurrencyService cryptoCurrencyService;
 				
 	@Transactional
 	public User save(RegisterUserDTO userDTO) {
@@ -41,7 +60,7 @@ public class UserService {
 	}
 	
 	public List<UserDTO> findAll() {
-		List<User> users =  (List<User>) this.userRepository.findAll();
+		List<User> users = (List<User>) this.userRepository.findAll();
 		List<UserDTO> usersDTO = new ArrayList<UserDTO>();
 		for(User user: users) {
 			usersDTO.add(new UserDTO(user.getName(), user.getSurname(), user.getOperations(), user.getReputation()));
@@ -82,5 +101,50 @@ public class UserService {
 	
 	public boolean existsById(String email) {
 		return this.userRepository.findById(email).isPresent();
+	}
+	
+	public UserVolumeDTO findVolumeById(String email, DatePeriodDTO dateDTO) {
+		LocalDateTime dateFrom = new ValidDate(dateDTO.getDateFrom()).getDate();
+		LocalDateTime dateTo = new ValidDate(dateDTO.getDateTo()).getDate();
+		
+		User user = this.findById(email);
+		Float dollarPrice = this.dollarService.getDolarOficialSellValue();
+		
+		List<Transaction> doneTansactions = this.transactionService.findDoneTransactions(email, dateFrom, dateTo);
+		
+		Map<CryptoSymbol, Float> cryptoSymbolAmount = new HashMap<CryptoSymbol, Float>();
+		for(Transaction transaction : doneTansactions) {
+			Float actualCryptoAmount = cryptoSymbolAmount.getOrDefault(transaction.getCryptoSymbol(), 0f);
+			if(StringUtils.equals(transaction.getUser().getEmail(), email)) {
+				if(transaction.getTransactionIntention().getOperation() == Operation.BUY)
+					actualCryptoAmount -= transaction.getCryptoAmount();
+				else
+					actualCryptoAmount += transaction.getCryptoAmount();
+			} else if(StringUtils.equals(transaction.getTransactionIntention().getUser().getEmail(), email)) {
+				if(transaction.getTransactionIntention().getOperation() == Operation.BUY)
+					actualCryptoAmount += transaction.getCryptoAmount();
+				else
+					actualCryptoAmount -= transaction.getCryptoAmount();
+			}
+			
+			cryptoSymbolAmount.put(transaction.getCryptoSymbol(), actualCryptoAmount);
+		}
+		
+		List<CryptoActiveDTO> cryptoActives = new ArrayList<CryptoActiveDTO>();
+		for(CryptoSymbol cryptoSymbol : cryptoSymbolAmount.keySet()) {
+			Float cryptoAmount = cryptoSymbolAmount.get(cryptoSymbol);
+			Float cryptoDollarPrice = cryptoAmount * this.cryptoCurrencyService.getCryptoBySymbol(cryptoSymbol).getPrice();
+			Float cryptoPesosPrice = cryptoDollarPrice * dollarPrice;
+			
+			cryptoActives.add(new CryptoActiveDTO(cryptoSymbol, cryptoAmount, cryptoDollarPrice , cryptoPesosPrice));
+		}
+		
+		Float totalDollarPrice = cryptoActives
+				.stream()
+				.map(cryptoActiveDTO -> {return cryptoActiveDTO.getPrice();})
+				.reduce((totalDollars, cryptoPrice) -> {return totalDollars + cryptoPrice;})
+				.get();
+		
+		return new UserVolumeDTO(user, LocalDateTime.now(), totalDollarPrice, totalDollarPrice * dollarPrice, cryptoActives);
 	}
 }

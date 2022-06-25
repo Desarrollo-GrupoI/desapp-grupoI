@@ -10,7 +10,7 @@ import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.DolarValueDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.EntityNotFoundException;
 
 @Service
-public class DolarService {
+public class DollarService {
 	private RestTemplate template = new RestTemplate();
 	private String urlDolar = "https://www.dolarsi.com/api/api.php?type=dolar";
 	

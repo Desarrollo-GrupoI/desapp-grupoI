@@ -12,7 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "transaction_intention")
+@Table(name = "intention")
 public class Intention {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

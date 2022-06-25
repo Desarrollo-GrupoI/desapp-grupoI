@@ -1,6 +1,8 @@
 package ar.edu.unq.desapp.grupoi.backenddesappapl.service;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.NoSuchElementException;
 import javax.transaction.Transactional;
 import org.apache.commons.lang3.StringUtils;
@@ -16,7 +18,6 @@ import ar.edu.unq.desapp.grupoi.backenddesappapl.model.User;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.EntityNotFoundException;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.InvalidArgumentsException;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.SystemException;
-import ar.edu.unq.desapp.grupoi.backenddesappapl.model.utils.DateService;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.repositories.TransactionRepository;
 
 @Service
@@ -63,7 +64,7 @@ public class TransactionService {
 				
 				this.transactionRepository.save(transaction);
 				
-				throw new SystemException("The price is not in +/- 5 % range");
+				throw new SystemException("The transaction was canceled: the price is not in +/- 5 % range");
 			} else {
 				transaction.setState(TransactionState.DONE);
 				
@@ -101,5 +102,9 @@ public class TransactionService {
 		} catch(NoSuchElementException e) {
 			throw new EntityNotFoundException("The transaction was not found");
 		}
+	}
+	
+	public List<Transaction> findDoneTransactions(String email, LocalDateTime dateFrom, LocalDateTime dateTo) {
+		return this.transactionRepository.findDoneTransactions(email, dateFrom, dateTo);
 	}
 }

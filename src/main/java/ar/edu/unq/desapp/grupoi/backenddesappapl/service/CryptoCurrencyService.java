@@ -19,6 +19,10 @@ public class CryptoCurrencyService {
 	
 	public CryptoCurrencyService() {}
 	
+	public CryptoCurrency getCryptoBySymbol(CryptoSymbol symbol) {		
+		return template.getForObject(baseUrl + symbol, CryptoCurrency.class);
+	}
+	
 	public CryptoCurrency getCryptoBySymbol(String cryptoSymbol) {
 		CryptoSymbol symbol = new ValidCryptoSymbol(cryptoSymbol).getCryptoSymbol();
 		

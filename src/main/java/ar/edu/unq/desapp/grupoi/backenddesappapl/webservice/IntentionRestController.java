@@ -25,7 +25,7 @@ public class IntentionRestController {
 	private IntentionService intentionService;
 	
 	@PostMapping(path = "/register")
-	public ResponseEntity<?> register(@Valid @RequestBody RegisterIntentionDTO intention) {
+	public ResponseEntity<String> register(@Valid @RequestBody RegisterIntentionDTO intention) {
 		this.intentionService.saveIntention(intention);
 		return ResponseEntity.ok().body("The intention was registered");
 	}

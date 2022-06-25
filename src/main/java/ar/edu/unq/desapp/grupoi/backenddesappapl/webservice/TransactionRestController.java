@@ -20,23 +20,25 @@ public class TransactionRestController {
 	private TransactionService transactionService;
 	
 	@PostMapping(path = "/register")
-	public ResponseEntity<?> register(@Valid @RequestBody RegisterTransactionDTO transaction) {
+	public ResponseEntity<String> register(@Valid @RequestBody RegisterTransactionDTO transaction) {
 		this.transactionService.saveTransaction(transaction);
 		return ResponseEntity.ok().body("The transaction was registered");
 	} 
 	
 	@PostMapping(path = "/accept")
-	public ResponseEntity<?> accept(@Valid @RequestBody TransactionActionDTO transaction) {
+	public ResponseEntity<String> accept(@Valid @RequestBody TransactionActionDTO transaction) {
+		String responseMessage = "The transaction was accepted";
 		try {
 			this.transactionService.acceptTransaction(transaction);
 		} catch(SystemException e) {
-			return ResponseEntity.ok().body(e.getMessage());
+			responseMessage = e.getMessage();
 		}
-		return ResponseEntity.ok().body("The transaction was accepted");
+		
+		return ResponseEntity.ok().body(responseMessage);
 	}
 	
 	@PostMapping(path = "/cancel")
-	public ResponseEntity<?> cancel(@Valid @RequestBody TransactionActionDTO transaction) {
+	public ResponseEntity<String> cancel(@Valid @RequestBody TransactionActionDTO transaction) {
 		this.transactionService.cancelTransaction(transaction);
 		return ResponseEntity.ok().body("The transaction was canceled");
 	}

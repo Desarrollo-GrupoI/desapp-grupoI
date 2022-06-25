@@ -17,7 +17,6 @@ import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Intention;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Operation;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.User;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.EntityNotFoundException;
-import ar.edu.unq.desapp.grupoi.backenddesappapl.model.utils.DateService;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.utils.ValidCryptoSymbol;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.utils.ValidOperation;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.repositories.IntentionRepository;
@@ -27,7 +26,7 @@ public class IntentionService {
 	@Autowired
 	private IntentionRepository intentionRepository;
 	@Autowired
-	private DolarService dolarService;
+	private DollarService dolarService;
 	@Autowired
 	private UserService userService;
 	@Autowired

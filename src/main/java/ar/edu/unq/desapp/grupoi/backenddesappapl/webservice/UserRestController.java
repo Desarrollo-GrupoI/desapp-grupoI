@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.DatePeriodDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterUserDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.UserDTO;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.UserVolumeDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.User;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.service.UserService;
 
@@ -23,7 +26,7 @@ public class UserRestController {
 	private UserService userService;
 	
 	@PostMapping(path = "/register")
-	public ResponseEntity<?> register(@Valid @RequestBody RegisterUserDTO userDTO) {
+	public ResponseEntity<String> register(@Valid @RequestBody RegisterUserDTO userDTO) {
 		userService.save(userDTO);
 		return ResponseEntity.ok().body("The user was registered");
 	}
@@ -35,7 +38,12 @@ public class UserRestController {
 	}
 	
 	@GetMapping(path = "/getAll")
-	public List<UserDTO> findAll() {
-		return userService.findAll();
+	public ResponseEntity<List<UserDTO>> findAll() {
+		return ResponseEntity.ok().body(userService.findAll());
+	}
+	
+	@GetMapping(path = "/volume/{userEmail}")
+	public ResponseEntity<UserVolumeDTO> findVolumeById(@PathVariable String userEmail, @Valid @RequestBody DatePeriodDTO dateDTO) {
+		return ResponseEntity.ok().body(userService.findVolumeById(userEmail, dateDTO));
 	}
 }
