@@ -113,37 +113,32 @@ public class UserService {
 		List<Transaction> doneTansactions = this.transactionService.findDoneTransactions(email, dateFrom, dateTo);
 		
 		Map<CryptoSymbol, Float> cryptoSymbolAmount = new HashMap<CryptoSymbol, Float>();
+		Map<CryptoSymbol, Float> cryptoSymbolOperatedAmount = new HashMap<CryptoSymbol, Float>();
 		for(Transaction transaction : doneTansactions) {
-			Float actualCryptoAmount = cryptoSymbolAmount.getOrDefault(transaction.getCryptoSymbol(), 0f);
-			if(StringUtils.equals(transaction.getUser().getEmail(), email)) {
-				if(transaction.getTransactionIntention().getOperation() == Operation.BUY)
-					actualCryptoAmount -= transaction.getCryptoAmount();
-				else
-					actualCryptoAmount += transaction.getCryptoAmount();
-			} else if(StringUtils.equals(transaction.getTransactionIntention().getUser().getEmail(), email)) {
-				if(transaction.getTransactionIntention().getOperation() == Operation.BUY)
-					actualCryptoAmount += transaction.getCryptoAmount();
-				else
-					actualCryptoAmount -= transaction.getCryptoAmount();
-			}
+			Float cryptoAmount = cryptoSymbolAmount.getOrDefault(transaction.getCryptoSymbol(), 0f);
+			Float cryptoOperatedAmount = cryptoSymbolOperatedAmount.getOrDefault(transaction.getCryptoSymbol(), 0f);
 			
-			cryptoSymbolAmount.put(transaction.getCryptoSymbol(), actualCryptoAmount);
+			if(StringUtils.equals(transaction.getUser().getEmail(), email))
+				cryptoAmount = transaction.getTransactionIntention().getOperation() == Operation.BUY ? cryptoAmount - transaction.getCryptoAmount() : cryptoAmount + transaction.getCryptoAmount();
+			else if(StringUtils.equals(transaction.getTransactionIntention().getUser().getEmail(), email))
+				cryptoAmount = transaction.getTransactionIntention().getOperation() == Operation.BUY ? cryptoAmount + transaction.getCryptoAmount() : cryptoAmount - transaction.getCryptoAmount();
+			
+			cryptoSymbolAmount.put(transaction.getCryptoSymbol(), cryptoAmount);
+			cryptoSymbolOperatedAmount.put(transaction.getCryptoSymbol(), cryptoOperatedAmount + transaction.getCryptoAmount());
 		}
 		
 		List<CryptoActiveDTO> cryptoActives = new ArrayList<CryptoActiveDTO>();
 		for(CryptoSymbol cryptoSymbol : cryptoSymbolAmount.keySet()) {
 			Float cryptoAmount = cryptoSymbolAmount.get(cryptoSymbol);
-			Float cryptoDollarPrice = cryptoAmount * this.cryptoCurrencyService.getCryptoBySymbol(cryptoSymbol).getPrice();
+			Float cryptoDollarPrice = this.cryptoCurrencyService.getCryptoBySymbol(cryptoSymbol).getPrice();
 			Float cryptoPesosPrice = cryptoDollarPrice * dollarPrice;
 			
-			cryptoActives.add(new CryptoActiveDTO(cryptoSymbol, cryptoAmount, cryptoDollarPrice , cryptoPesosPrice));
+			cryptoActives.add(new CryptoActiveDTO(cryptoSymbol, cryptoAmount, cryptoDollarPrice, cryptoPesosPrice));
 		}
 		
-		Float totalDollarPrice = cryptoActives
-				.stream()
-				.map(cryptoActiveDTO -> {return cryptoActiveDTO.getPrice();})
-				.reduce((totalDollars, cryptoPrice) -> {return totalDollars + cryptoPrice;})
-				.get();
+		Float totalDollarPrice = 0f;
+		for(CryptoActiveDTO cryptoActive : cryptoActives)
+			totalDollarPrice += cryptoSymbolOperatedAmount.get(cryptoActive.getCryptoSymbol()) * cryptoActive.getPrice();
 		
 		return new UserVolumeDTO(user, LocalDateTime.now(), totalDollarPrice, totalDollarPrice * dollarPrice, cryptoActives);
 	}
