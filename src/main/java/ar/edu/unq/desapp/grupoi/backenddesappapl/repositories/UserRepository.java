@@ -1,5 +1,7 @@
 package ar.edu.unq.desapp.grupoi.backenddesappapl.repositories;
 
+import java.util.Optional;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -31,4 +33,6 @@ public interface UserRepository extends CrudRepository<User, String> {
 	@Modifying
 	@Query(nativeQuery = true, value = "UPDATE User SET reputation_points = reputation_points - ?3 WHERE email = ?1 OR email = ?2")
 	void removeReputationPoints(String emailA, String emailB, Integer reputationPointsOperation);
+	
+	Optional<User> findUserByName(String name);
 }

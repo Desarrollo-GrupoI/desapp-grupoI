@@ -7,14 +7,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import javax.transaction.Transactional;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.CryptoActiveDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.DatePeriodDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterUserDTO;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.UserCredentialsDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.UserDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.UserVolumeDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.CryptoSymbol;
@@ -29,6 +31,7 @@ import ar.edu.unq.desapp.grupoi.backenddesappapl.repositories.UserRepository;
 
 @Service
 public class UserService {
+	
 	@Autowired
 	private CvuRepository cvuRepository;
 	@Autowired
@@ -39,16 +42,19 @@ public class UserService {
 	private DollarService dollarService;
 	@Autowired
 	private CryptoCurrencyService cryptoCurrencyService;
-				
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+	
 	@Transactional
 	public User save(RegisterUserDTO userDTO) {
+		String encodedPassword = passwordEncoder.encode(userDTO.getPassword());
 		Cvu cvu = this.cvuRepository.save(new Cvu());
 		User user = new User(
 				userDTO.getName(),
 				userDTO.getSurname(),
 				userDTO.getEmail(),
 				userDTO.getAddress(),
-				userDTO.getPassword()
+				encodedPassword
 				);
 
 		user.initializeCvu(cvu.getNumber());

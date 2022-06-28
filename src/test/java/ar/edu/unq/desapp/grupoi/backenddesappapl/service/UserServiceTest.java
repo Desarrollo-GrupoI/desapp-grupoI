@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterUserDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.UserDTO;
@@ -29,6 +30,8 @@ public class UserServiceTest {
     private UserRepository userRepository;		
 	@InjectMocks
     private UserService userService;
+	@Mock
+	private PasswordEncoder passwordEncoder;
       
     @Test
     public void saveUser() {
