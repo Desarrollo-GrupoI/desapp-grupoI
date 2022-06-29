@@ -2,6 +2,7 @@ package ar.edu.unq.desapp.grupoi.backenddesappapl.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -42,6 +43,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    	.authorizeRequests()
 	    	.antMatchers("/user/register").permitAll()
 	    	.antMatchers("/user/login").permitAll()
+	    	.antMatchers(
+                    HttpMethod.GET,
+                    "/",
+                    "/v2/api-docs",           // swagger
+                    "/webjars/**",            // swagger-ui webjars
+                    "/swagger-resources/**",  // swagger-ui resources
+                    "/configuration/**",      // swagger configuration
+                    "/*.html",
+                    "/favicon.ico",
+                    "/**/*.html",
+                    "/**/*.css",
+                    "/**/*.js"
+            ).permitAll()
 	    	.anyRequest().authenticated()
 	    	.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
