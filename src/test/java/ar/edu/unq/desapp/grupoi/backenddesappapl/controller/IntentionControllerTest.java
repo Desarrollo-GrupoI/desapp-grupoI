@@ -14,7 +14,7 @@ import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterIntentionDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterUserDTO;
 
 @SpringBootTest(classes = ar.edu.unq.desapp.grupoi.backenddesappapl.SwaggerApiApplication.class)
-@AutoConfigureMockMvc 
+@AutoConfigureMockMvc(addFilters = false)
 public class IntentionControllerTest {
 	@Autowired
 	private MockMvc mockMvc;

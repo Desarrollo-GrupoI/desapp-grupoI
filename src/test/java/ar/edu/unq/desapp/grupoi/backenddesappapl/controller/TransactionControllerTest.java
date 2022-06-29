@@ -16,7 +16,7 @@ import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterUserDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.TransactionActionDTO;
 
 @SpringBootTest(classes = ar.edu.unq.desapp.grupoi.backenddesappapl.SwaggerApiApplication.class)
-@AutoConfigureMockMvc 
+@AutoConfigureMockMvc(addFilters = false)
 public class TransactionControllerTest {
 	
 	@Autowired
