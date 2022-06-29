@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.CryptoActiveDTO;
@@ -25,6 +26,7 @@ import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Operation;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Transaction;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.User;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.EntityNotFoundException;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.InvalidArgumentsException;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.utils.ValidDate;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.repositories.CvuRepository;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.repositories.UserRepository;
@@ -43,7 +45,19 @@ public class UserService {
 	@Autowired
 	private CryptoCurrencyService cryptoCurrencyService;
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;    
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    
+    @Transactional
+    public void login(UserCredentialsDTO userDTO) {
+    	UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDTO.email(), userDTO.password());
+    	try {
+    		authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+    	} catch (AuthenticationException e) {
+    		throw new InvalidArgumentsException("The email or password is invalid");
+    	}
+    }
 	
 	@Transactional
 	public User save(RegisterUserDTO userDTO) {
@@ -111,7 +125,7 @@ public class UserService {
 	
 	public UserVolumeDTO findVolumeById(String email, DatePeriodDTO dateDTO) {
 		LocalDateTime dateFrom = new ValidDate(dateDTO.getDateFrom()).getDate();
-		LocalDateTime dateTo = new ValidDate(dateDTO.getDateTo()).getDate();
+		LocalDateTime dateTo = new ValidDate(dateDTO.getDateTo()).getDate(); 
 		
 		User user = this.findById(email);
 		Float dollarPrice = this.dollarService.getDolarOficialSellValue();

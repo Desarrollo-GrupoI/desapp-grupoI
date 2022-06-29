@@ -107,7 +107,4 @@ public class IntentionService {
 		return intentionsDTO;
 	}
 	
-	public Boolean existsById(Integer intentionId) {
-		return this.intentionRepository.findById(intentionId).isPresent();
-	}
 }

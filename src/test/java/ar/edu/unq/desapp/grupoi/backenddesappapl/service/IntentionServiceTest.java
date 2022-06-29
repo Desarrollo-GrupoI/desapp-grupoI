@@ -100,11 +100,11 @@ public class IntentionServiceTest {
 		intentions.add(intention1);
 		intentions.add(intention2);
 		
-		when(intentionRepository.findAll()).thenReturn(intentions);
+		when(intentionRepository.findAllActives()).thenReturn(intentions);
 		
 		List<IntentionDTO> intentionsDTO = intentionService.findAll();
 		Assertions.assertEquals(2, intentionsDTO.size());
-		verify(intentionRepository, atLeastOnce()).findAll();
+		verify(intentionRepository, atLeastOnce()).findAllActives();
 		
 	}
 	

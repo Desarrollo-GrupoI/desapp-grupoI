@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupoi.backenddesappapl.webservice;
 
+import java.util.HashMap;
 import java.util.List;
 import javax.validation.Valid;
 
@@ -35,18 +36,16 @@ public class UserRestController {
     @Autowired
     private JwtUtils jwtUtils;
     
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    
 	private Logger logger = LogManager.getLogger(this.getClass());
     
 	@PostMapping(value = "/login")
-    public ResponseEntity<String> login(@RequestBody UserCredentialsDTO userDTO) {		
-		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDTO.email(), userDTO.password());
-        authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+    public ResponseEntity<?> login(@RequestBody UserCredentialsDTO userDTO) {
+		HashMap<String, String> map = new HashMap<String, String>();	
+        userService.login(userDTO);     
         String token = jwtUtils.createToken(userDTO.email());
-
-        return ResponseEntity.ok("Su token es : " + token);
+        map.put("token", token);
+        
+        return ResponseEntity.ok(map);
     }
 	
 	@PostMapping(path = "/register")

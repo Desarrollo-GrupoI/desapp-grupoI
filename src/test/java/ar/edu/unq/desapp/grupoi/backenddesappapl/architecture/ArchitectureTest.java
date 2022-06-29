@@ -6,6 +6,7 @@ import com.tngtech.archunit.lang.ArchRule;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 
 import javax.persistence.Entity;
+import javax.transaction.Transactional;
 
 @AnalyzeClasses(packages = "ar.edu.unq.desapp.grupoi.backenddesappapl")
 public class ArchitectureTest {
@@ -40,7 +41,8 @@ public class ArchitectureTest {
 	 @ArchTest
 	    public static final ArchRule onlyClassesInModelShouldHaveEntityAnnotation = classes()
 	            .that().areAnnotatedWith(Entity.class)
-	            .should().resideInAPackage("..model..");
+	            .should().resideInAPackage("..model.."); 
+
 	 
 	 
 
