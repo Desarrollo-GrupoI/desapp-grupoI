@@ -9,13 +9,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.CryptoCotizationDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.CryptoCurrency;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.service.CryptoCurrencyService;
 
@@ -44,9 +42,12 @@ public class CryptoCurrencyRestController {
 		return ResponseEntity.ok().body(cryptos);
 	}
 	
-	@GetMapping(path = "/cotizationPerDay")
-	public ResponseEntity<Map<LocalDateTime,List<CryptoCurrency>>> cotizationCryptoPerDay() {
-		Map<LocalDateTime,List<CryptoCurrency>> cryptoHistory = cryptoService.cotizationCryptoPerDay();
-		return ResponseEntity.ok().body(cryptos);
+	@GetMapping(path = "/getAllCryptosHistory")
+	public ResponseEntity<Map<LocalDateTime, List<CryptoCurrency>>> getCryptosCurrenciesHistory() {
+		logger.log(Level.INFO, "Starting - obtaining all the crypto currencies history");
+		Map<LocalDateTime, List<CryptoCurrency>> cryptoHistory = cryptoService.getCryptosCurrenciesHistory();
+		logger.log(Level.INFO, "Ending - obtaining all the crypto currencies history");
+		
+		return ResponseEntity.ok().body(cryptoHistory);
 	}
 }

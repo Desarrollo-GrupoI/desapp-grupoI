@@ -3,7 +3,6 @@ package ar.edu.unq.desapp.grupoi.backenddesappapl.dto;
 import java.time.LocalDateTime;
 
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.CryptoSymbol;
-import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Operation;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.TransactionState;
 
 public class TransactionDTO {

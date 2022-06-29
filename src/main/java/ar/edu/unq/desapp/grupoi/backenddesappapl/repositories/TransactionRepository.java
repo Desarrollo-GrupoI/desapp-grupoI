@@ -10,7 +10,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Transaction;
-import ar.edu.unq.desapp.grupoi.backenddesappapl.model.TransactionState;
 
 @Configuration
 @Repository

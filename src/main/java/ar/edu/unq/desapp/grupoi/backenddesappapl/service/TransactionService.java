@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.TransactionActionDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.TransactionDTO;
-import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.IntentionDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterTransactionDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Intention;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Transaction;

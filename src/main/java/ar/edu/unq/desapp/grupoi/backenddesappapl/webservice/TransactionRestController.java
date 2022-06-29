@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.TransactionActionDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.TransactionDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.SystemException;
-import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.IntentionDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterTransactionDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.service.TransactionService;
 
@@ -40,9 +39,9 @@ public class TransactionRestController {
 	
 	@GetMapping(path = "/getAll")
 	public ResponseEntity<List<TransactionDTO>> findAllActives() {
-		logger.log(Level.INFO, "Starting - obtaining all the active transactions ");
+		logger.log(Level.INFO, "Starting - obtaining all the active transactions");
 		List<TransactionDTO> transactions = transactionService.findAllActives();
-		logger.log(Level.INFO, "Ending - obtaining all the active transactions ");
+		logger.log(Level.INFO, "Ending - obtaining all the active transactions");
 		
 		return ResponseEntity.ok().body(transactions);
 	}
@@ -69,6 +68,4 @@ public class TransactionRestController {
 		
 		return ResponseEntity.ok().body("The transaction was canceled");
 	}
-		
-	
 }

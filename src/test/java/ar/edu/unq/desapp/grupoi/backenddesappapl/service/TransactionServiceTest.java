@@ -15,9 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.IntentionDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterTransactionDTO;
-import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.TransactionActionDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.TransactionDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.CryptoSymbol;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Intention;
@@ -25,7 +23,6 @@ import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Operation;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Transaction;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.TransactionState;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.User;
-import ar.edu.unq.desapp.grupoi.backenddesappapl.model.exceptions.SystemException;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.utils.ValidCryptoSymbol;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.utils.ValidOperation;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.repositories.IntentionRepository;
@@ -113,12 +110,11 @@ public class TransactionServiceTest {
 		Intention intention = new Intention(cryptoSymbol,cryptoAmount,cryptoPrice,cryptoPesosArg,user,operation,date);
 		
 		Transaction transaction = new Transaction(intention,user,TransactionState.DONE);
-		Transaction transaction1 = new Transaction(intention,user,TransactionState.CANCELED);
-		Transaction transaction2 = new Transaction(intention,user,TransactionState.DONE);
+		Transaction transaction1 = new Transaction(intention,user,TransactionState.DONE);
 		
 		List<Transaction> transactions = new ArrayList<Transaction>();
 		transactions.add(transaction);
-		transactions.add(transaction2);
+		transactions.add(transaction1);
 		
 		when(transactionRepository.findDoneTransactions(user.getEmail(), date, date.plusDays(2))).thenReturn(transactions);
 			
