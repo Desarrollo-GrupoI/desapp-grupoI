@@ -10,6 +10,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Transaction;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.model.TransactionState;
 
 @Configuration
 @Repository
@@ -21,4 +22,7 @@ public interface TransactionRepository extends CrudRepository<Transaction, Integ
 	
 	@Query("SELECT t FROM Transaction t WHERE (user.email = ?1 OR transactionIntention.user.email = ?1) AND (date BETWEEN ?2 AND ?3)")
 	List<Transaction> findDoneTransactions(String email, LocalDateTime dateFrom, LocalDateTime dateTo);
+	
+	@Query("SELECT t FROM Transaction t WHERE t.state = 'PENDING'")
+	List<Transaction> findAllActives();
 }

@@ -18,6 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.IntentionDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterTransactionDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.TransactionActionDTO;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.TransactionDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.CryptoSymbol;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Intention;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Operation;
@@ -72,6 +73,31 @@ public class TransactionServiceTest {
 		
 		verify(transactionRepository, atLeastOnce()).save(any());
 		
+	}
+	
+	@Test
+	public void findAllActivesTransactions() {
+		CryptoSymbol cryptoSymbol = new ValidCryptoSymbol("MATICUSDT").getCryptoSymbol();
+		Operation operation = new ValidOperation("BUY").getOperation();
+		LocalDateTime date = LocalDateTime.now();
+		Float cryptoAmount = Float.parseFloat("2");
+		Float cryptoPrice = Float.parseFloat("10");
+		Float cryptoPesosArg = Float.parseFloat("140");
+		User user = new User("nameTest","surnameTest","user@gmail.com","addressTest","123Test#");
+		Intention intention = new Intention(cryptoSymbol,cryptoAmount,cryptoPrice,cryptoPesosArg,user,operation,date);
+		
+		Transaction transaction = new Transaction(intention,user,TransactionState.PENDING);
+		Transaction transaction1 = new Transaction(intention,user,TransactionState.PENDING);
+		
+		List<Transaction> transactions = new ArrayList<Transaction>();
+		transactions.add(transaction);
+		transactions.add(transaction1);
+		
+		when(transactionRepository.findAllActives()).thenReturn(transactions);
+			
+		List<TransactionDTO> transactionsService = transactionService.findAllActives();
+		Assertions.assertEquals(2, transactionsService.size());
+		verify(transactionRepository, atLeastOnce()).findAllActives();
 	}
 	
 	

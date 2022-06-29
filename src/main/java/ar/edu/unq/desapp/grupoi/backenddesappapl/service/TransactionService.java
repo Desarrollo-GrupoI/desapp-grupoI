@@ -2,6 +2,7 @@ package ar.edu.unq.desapp.grupoi.backenddesappapl.service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import javax.transaction.Transactional;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.TransactionActionDTO;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.TransactionDTO;
+import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.IntentionDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.RegisterTransactionDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Intention;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Transaction;
@@ -107,4 +110,29 @@ public class TransactionService {
 	public List<Transaction> findDoneTransactions(String email, LocalDateTime dateFrom, LocalDateTime dateTo) {
 		return this.transactionRepository.findDoneTransactions(email, dateFrom, dateTo);
 	}
+	
+	public List<TransactionDTO> findAllActives() {
+		List<Transaction> transactions = this.transactionRepository.findAllActives();
+		List<TransactionDTO> transactionsDTO = new ArrayList<TransactionDTO>();
+		
+		for(Transaction transaction : transactions) {
+			transactionsDTO.add(
+					new TransactionDTO(
+							transaction.getTransactionIntention().getId(),
+							transaction.getTransactionIntention().getDate(),
+							transaction.getCryptoSymbol(),
+							transaction.getCryptoAmount(),
+							transaction.getTransactionIntention().getPrice(),
+							transaction.getPesosArgAmount(),
+							transaction.getState(),
+							transaction.getUser().getName(),
+							transaction.getUser().getSurname(),
+							transaction.getUser().getOperations(),
+							transaction.getUser().getReputation()
+							)
+					);
+		}
+		return transactionsDTO;					
+		 
+	} 
 }

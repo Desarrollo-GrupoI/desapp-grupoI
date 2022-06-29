@@ -1,13 +1,19 @@
 package ar.edu.unq.desapp.grupoi.backenddesappapl.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import ar.edu.unq.desapp.grupoi.backenddesappapl.dto.CryptoCotizationDTO;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.CryptoCurrency;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.CryptoSymbol;
 import ar.edu.unq.desapp.grupoi.backenddesappapl.model.utils.ValidCryptoSymbol;
@@ -16,6 +22,7 @@ import ar.edu.unq.desapp.grupoi.backenddesappapl.model.utils.ValidCryptoSymbol;
 public class CryptoCurrencyService {
 	private String baseUrl = "https://api1.binance.com/api/v3/ticker/price?symbol=";
 	private RestTemplate template = new RestTemplate();
+	private Map<LocalDateTime,List<CryptoCurrency>> cryptoCurrencies = new HashMap<LocalDateTime,List<CryptoCurrency>>();	
 	
 	public CryptoCurrencyService() {}
 	
@@ -36,7 +43,13 @@ public class CryptoCurrencyService {
 		
 		for(CryptoSymbol symbol : CryptoSymbol.values())
 			cryptoCurrencies.add(template.getForObject(baseUrl + symbol, CryptoCurrency.class));
-		
-		return cryptoCurrencies;			
+		 
+		return cryptoCurrencies;
+	}
+	
+	@Transactional
+	@Scheduled(cron = "*/10 * * * * ?" )
+	public void cotizationCryptoPerDay() {		
+		cryptoCurrencies.put(LocalDateTime.now(), this.getCryptoSymbols());
 	}
 }
