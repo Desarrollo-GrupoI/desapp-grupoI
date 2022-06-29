@@ -3,6 +3,9 @@ package ar.edu.unq.desapp.grupoi.backenddesappapl.webservice;
 import java.util.List;
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -35,6 +38,8 @@ public class UserRestController {
     @Autowired
     private AuthenticationManager authenticationManager;
     
+	private Logger logger = LogManager.getLogger(this.getClass());
+    
 	@PostMapping(value = "/login")
     public ResponseEntity<String> login(@RequestBody UserCredentialsDTO userDTO) {		
 		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDTO.email(), userDTO.password());
@@ -46,23 +51,37 @@ public class UserRestController {
 	
 	@PostMapping(path = "/register")
 	public ResponseEntity<String> register(@Valid @RequestBody RegisterUserDTO userDTO) {
+		logger.log(Level.INFO, "Starting - registering the user '" + userDTO + "'");
 		userService.save(userDTO);
+		logger.log(Level.INFO, "Ending - registering the user");
+		
 		return ResponseEntity.ok().body("The user was registered");
 	}
 	
 	@GetMapping(path = "/get/{userEmail}")
 	public ResponseEntity<User> findById(@PathVariable String userEmail) {
+		logger.log(Level.INFO, "Starting - searching the user with the email '" + userEmail + "'");
 		User user = userService.findById(userEmail);
+		logger.log(Level.INFO, "Ending - searching the user with the email");
+		
 		return ResponseEntity.ok().body(user);
 	}
 	
 	@GetMapping(path = "/getAll")
 	public ResponseEntity<List<UserDTO>> findAll() {
-		return ResponseEntity.ok().body(userService.findAll());
+		logger.log(Level.INFO, "Starting - obtaining all the users");
+		List<UserDTO> users = userService.findAll();
+		logger.log(Level.INFO, "Ending - obtaining all the users");
+		
+		return ResponseEntity.ok().body(users);
 	}
 	
 	@GetMapping(path = "/volume/{userEmail}")
 	public ResponseEntity<UserVolumeDTO> findVolumeById(@PathVariable String userEmail, @Valid @RequestBody DatePeriodDTO dateDTO) {
-		return ResponseEntity.ok().body(userService.findVolumeById(userEmail, dateDTO));
+		logger.log(Level.INFO, "Starting - obtaining the volume of the user with the email '" + userEmail + "', between the dates " + dateDTO);
+		UserVolumeDTO userVolume = userService.findVolumeById(userEmail, dateDTO);
+		logger.log(Level.INFO, "Starting - obtaining the user volume");
+		
+		return ResponseEntity.ok().body(userVolume);
 	}
 }

@@ -16,7 +16,7 @@ import ar.edu.unq.desapp.grupoi.backenddesappapl.model.Transaction;
 public interface TransactionRepository extends CrudRepository<Transaction, Integer> {
 	
 	@Modifying
-	@Query(nativeQuery = true, value = "UPDATE Transaction SET state = 'CANCELED' WHERE id != ?1 AND intention_id = ?2")
+	@Query(value = "UPDATE Transaction SET state = 'CANCELED' WHERE id != ?1 AND intention_id = ?2", nativeQuery = true)
 	void cancelAllOthersTransactions(Integer acceptedTransactionId, Integer intentionId);
 	
 	@Query("SELECT t FROM Transaction t WHERE (user.email = ?1 OR transactionIntention.user.email = ?1) AND (date BETWEEN ?2 AND ?3)")

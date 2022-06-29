@@ -29,4 +29,9 @@ public class DatePeriodDTO {
 	public void setDateTo(String dateTo) {
 		this.dateTo = dateTo;
 	}
+	
+	@Override
+	public String toString() {
+		return "{dateFrom: " + this.dateFrom + ", dateTo: " + this.dateTo + "}";
+	}
 }

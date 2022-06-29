@@ -54,7 +54,7 @@ public class IntentionService {
 	} 
 	
 	public List<IntentionDTO> findAll() {
-		List<Intention> intentions = (List<Intention>) this.intentionRepository.findAll();
+		List<Intention> intentions = this.intentionRepository.findAllActives();
 		List<IntentionDTO> intentionsDTO = new ArrayList<IntentionDTO>();
 		
 		for(Intention intention : intentions) {
